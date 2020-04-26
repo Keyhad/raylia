@@ -25,11 +25,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Release (4.2)\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\Release (4.2)\Toolbox.NETMF.Hardware.WiFlyGSX.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Toolbox.NETMF.Hardware.WiFlyGSX.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />

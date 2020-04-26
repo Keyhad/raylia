@@ -55,6 +55,10 @@
       <Project>{DA3E4C2A-C1DC-44CB-A0FE-DF2F5EB34664}</Project>
       <Name>Toolbox.NETMF.Hardware.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\toolbox\Hardware.Netduino\Toolbox.NETMF.Hardware.Netduino.csproj">
+      <Project>{4A22572A-CC3D-455E-A666-D21CA25D2246}</Project>
+      <Name>Toolbox.NETMF.Hardware.Netduino</Name>
+    </ProjectReference>
     <ProjectReference Include="..\toolbox\Hardware.RgbLedStrip\Toolbox.NETMF.Hardware.RgbLedStrip.csproj">
       <Project>{456BA380-37BB-4719-A943-AF203D465FCC}</Project>
       <Name>Toolbox.NETMF.Hardware.RgbLedStrip</Name>

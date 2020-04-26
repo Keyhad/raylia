@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.RgbL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Core", "toolbox\Core\Toolbox.NETMF.Core.csproj", "{CBF2AD5F-2168-4605-BFCB-0256D65AD95B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.Netduino", "toolbox\Hardware.Netduino\Toolbox.NETMF.Hardware.Netduino.csproj", "{4A22572A-CC3D-455E-A666-D21CA25D2246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{CBF2AD5F-2168-4605-BFCB-0256D65AD95B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF2AD5F-2168-4605-BFCB-0256D65AD95B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF2AD5F-2168-4605-BFCB-0256D65AD95B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
