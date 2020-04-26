@@ -1,0 +1,1 @@
+Simple Watch face presenting Time, Date and week number plus progress bar at the background;  

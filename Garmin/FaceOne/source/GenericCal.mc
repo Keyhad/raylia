@@ -1,0 +1,6 @@
+class GenericCal {
+
+    function initialize() {
+    }
+    
+}

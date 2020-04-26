@@ -1,0 +1,21 @@
+<settings>
+
+    <setting propertyKey="@Properties.ProgressColor" title="@Strings.ProgressColorTitle">
+        <settingConfig type="list">
+            <listEntry value="0x00AA00">@Strings.ColorGreen</listEntry>
+            <listEntry value="0x0000AA">@Strings.ColorBlue</listEntry>
+            <listEntry value="0xFF7F27">@Strings.ColorOrange</listEntry>
+            <listEntry value="0xAA0000">@Strings.ColorRed</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
+        <settingConfig type="list">
+            <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
+            <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
+            <listEntry value="0xAAAAAA">@Strings.ColorLightGray</listEntry>
+            <listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry>
+        </settingConfig>
+    </setting>
+
+</settings>
