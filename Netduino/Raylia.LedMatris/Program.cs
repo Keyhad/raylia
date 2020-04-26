@@ -27,25 +27,35 @@ namespace Raylia.LedMatris
     {
         public static void Main()
         {
-            // There's a 1M strip (32 LEDs) connected to the first SPI bus on the Netduino
-            RgbLedStrip Chain = new RgbLedStrip(RgbLedStrip.Chipsets.WS2812, 64, SPI_Devices.SPI1);
+            // There's a 8x8 matrix (64 LEDs) connected to the first SPI bus on the Netduino
+            RgbMatrix matrix = new RgbMatrix(8, 8);
+
+            // check the colors
+            matrix.SetColor(0, 0xff0000);
+            matrix.SetColor(1, 0x00ff00);
+            matrix.SetColor(2, 0x0000ff);
+            matrix.Write();
+            Thread.Sleep(1000);
 
             // Repeats all demos infinitely
             while (true)
             {
-                // Shows a red, green and blue LED
-                Chain.SetColor(0, 0xff0000);
-                Chain.SetColor(1, 0x00ff00);
-                Chain.SetColor(2, 0x0000ff);
-                Chain.Write();
+                // clear leds
+                matrix.SetColorAll(0x000000, false);
+                matrix.Write();
+                //Thread.Sleep(1000);
 
-                // Chain.SetColorAll(0x000000, false);
-                Thread.Sleep(1000);
+                // put rect1
+                matrix.SetColor(1, 1, 5, 5, 0xff, 0x00, 0x00);
+                matrix.Write();
+                Thread.Sleep(200);
 
-                // Loops R, G and B for one minute
-                Chain.SetColorAll(0x000000, false);
-                Thread.Sleep(1000);
-#if true
+                // put rect2
+                matrix.SetColor(2, 2, 3, 3, 0x00, 0x00, 0x00);
+                matrix.Write();
+                Thread.Sleep(200);
+
+#if false
                 // Some other visual efects
 
                 for (int Seconds = 0; Seconds < 30; ++Seconds)
