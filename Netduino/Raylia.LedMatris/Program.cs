@@ -3,7 +3,7 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware;
-using SecretLabs.NETMF.Hardware.Netduino;
+using SecretLabs.NETMF.Hardware.NetduinoPlus;
 using Toolbox.NETMF.Hardware;
 
 /*
@@ -21,7 +21,7 @@ using Toolbox.NETMF.Hardware;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace RGB_LED_Strip
+namespace Raylia.LedMatris
 {
     public class Program
     {
