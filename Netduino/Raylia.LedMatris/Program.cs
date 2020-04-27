@@ -37,23 +37,55 @@ namespace Raylia.LedMatris
             matrix.Write();
             Thread.Sleep(1000);
 
+            ulong[] colors =
+            {
+                0x070000L,
+                0x0f0000L,
+                0x7f0000L,
+                0xff0000L,
+                0x7f0000L,
+                0x0f0000L,
+            };
+
+            int color = 0;
             // Repeats all demos infinitely
             while (true)
             {
-                // clear leds
-                matrix.SetColorAll(0x000000, false);
-                matrix.Write();
-                //Thread.Sleep(1000);
+                matrix.Claer();
+                Thread.Sleep(1000);
+
+                matrix.WriteText(1, 0, "1234567890123456789012345678901234567891234567890", 0x00ff00L, 100);
+
+                matrix.Claer();
+                Thread.Sleep(1000);
+
+                matrix.ScrollLeftText(1, 0, " Hello World! ... Hello World! ... Hello World! ... Hello World! ", 0x00ff00L, 200);
+
+                matrix.Claer();
+                Thread.Sleep(1000);
+
+                color %= 6;
+
+                ulong rgb = colors[color++];
 
                 // put rect1
-                matrix.SetColor(1, 1, 5, 5, 0xff, 0x00, 0x00);
+                matrix.SetColorRect(0, 0, 8, 8, rgb);
                 matrix.Write();
-                Thread.Sleep(200);
+                Thread.Sleep(100);
+
+                rgb = colors[color++];
 
                 // put rect2
-                matrix.SetColor(2, 2, 3, 3, 0x00, 0x00, 0x00);
+                matrix.SetColorRect(1, 1, 6, 6, rgb);
                 matrix.Write();
-                Thread.Sleep(200);
+                Thread.Sleep(100);
+
+                rgb = colors[color++];
+
+                // put rect3
+                matrix.SetColorRect(2, 2, 4, 4, rgb);
+                matrix.Write();
+                Thread.Sleep(100);
 
 #if false
                 // Some other visual efects
