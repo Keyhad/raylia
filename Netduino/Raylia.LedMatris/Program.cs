@@ -7,7 +7,7 @@ using SecretLabs.NETMF.Hardware.NetduinoPlus;
 using Toolbox.NETMF.Hardware;
 
 /*
- * Copyright 2012-2014 Stefan Thoolen (http://www.netmftoolbox.com/)
+ * Copyright 2020 Keyvan Hadjari
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
