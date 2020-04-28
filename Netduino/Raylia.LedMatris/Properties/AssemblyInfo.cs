@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Raylia.LedMatris")]
+[assembly: AssemblyTitle("Raylia.LedMatrix")]
 [assembly: AssemblyDescription("Led Matris test")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Raylia")]
-[assembly: AssemblyProduct("Raylia.LedMatris")]
+[assembly: AssemblyProduct("Raylia.LedMatrix")]
 [assembly: AssemblyCopyright("Copyright © NETMFToolbox.com 2012-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

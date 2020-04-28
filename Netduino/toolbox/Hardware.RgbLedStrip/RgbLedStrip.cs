@@ -39,7 +39,7 @@ namespace Toolbox.NETMF.Hardware
         /// <summary>
         /// SPI freq in KHz
         /// </summary>
-        private uint _freq;
+        private uint _Freq;
 
         /// <summary>
         /// The used chipset
@@ -65,6 +65,11 @@ namespace Toolbox.NETMF.Hardware
         /// The SPI write buffer
         /// </summary>
         private byte[] _Buffer;
+
+        /// <summary>
+        /// The SPI clock edge
+        /// </summary>
+        private bool _Clock_Edge = false;
 
         /// <summary>
         /// Amount of LEDs
@@ -119,7 +124,7 @@ namespace Toolbox.NETMF.Hardware
         public RgbLedStrip(Chipsets Chipset, int LedCount, SPI.SPI_module SPI_Device, Cpu.Pin ChipSelect_Port, bool ChipSelect_ActiveState)
         {
             // default freq  is 1Mhz
-            _freq = 1000; 
+            _Freq = 1000; 
 
             // The used chipset
             this._Chipset = Chipset;
@@ -152,7 +157,8 @@ namespace Toolbox.NETMF.Hardware
                 // Creates a new buffer
                 this._Buffer = new byte[LedCount * 3];
 
-                _freq = 4000; // 6000
+                _Freq = 4000; // 6000
+                _Clock_Edge = false;
 
                 this.Sequence = Sequences.GRB;
             }
@@ -164,8 +170,8 @@ namespace Toolbox.NETMF.Hardware
                 ChipSelect_SetupTime: 0,
                 ChipSelect_HoldTime: 0,
                 Clock_IdleState: false,
-                Clock_Edge: false,
-                Clock_RateKHz: _freq,
+                Clock_Edge: _Clock_Edge,
+                Clock_RateKHz: _Freq,
                 SPI_mod: SPI_Device
             ));
 
@@ -253,7 +259,9 @@ namespace Toolbox.NETMF.Hardware
         public void SetColorAll(byte Red, byte Green, byte Blue, bool Delayed = true)
         {
             for (int LedNo = 0; LedNo < this.LedCount; ++LedNo)
+            {
                 this.SetColor(LedNo, Red, Green, Blue, true);
+            }
 
             if (!Delayed) this.Write();
         }

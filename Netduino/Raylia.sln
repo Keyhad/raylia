@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.LedMatris", "Raylia.LedMatris\Raylia.LedMatris.csproj", "{044A0795-4C75-4CFE-9C09-A1A1AC614D86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.LedMatrix", "Raylia.LedMatris\Raylia.LedMatrix.csproj", "{044A0795-4C75-4CFE-9C09-A1A1AC614D86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.Core", "toolbox\Hardware.Core\Toolbox.NETMF.Hardware.Core.csproj", "{DA3E4C2A-C1DC-44CB-A0FE-DF2F5EB34664}"
 EndProject

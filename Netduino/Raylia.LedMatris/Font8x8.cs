@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Raylia.LedMatris
+namespace Raylia.LedMatrix
 {
     static public class Font8x8
     {

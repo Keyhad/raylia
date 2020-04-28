@@ -5,10 +5,12 @@ using Toolbox.NETMF.Hardware;
 using System.Text;
 using System.Threading;
 
-namespace Raylia.LedMatris
+namespace Raylia.LedMatrix
 {
     public class RgbMatrix: RgbLedStrip
     {
+        private byte[] CurrentFont = Font8x8.Sinclair_S;
+
         public RgbMatrix(int width, int height): base(RgbLedStrip.Chipsets.WS2812, width * height, SPI_Devices.SPI1)
         {
             this.Width = width;
@@ -34,7 +36,7 @@ namespace Raylia.LedMatris
         /// <param name="Green">Green brightness (0 to 255)</param>
         /// <param name="Blue">Blue brightness (0 to 255)</param>
         /// <param name="Delayed">Do we have to write all LEDs immediately?</param>
-        public void SetColorRect(int x, int y, int RectWith, int RectHeight, byte Red, byte Green, byte Blue, bool Delayed = true)
+        public virtual void SetColorRect(int x, int y, int RectWith, int RectHeight, byte Red, byte Green, byte Blue, bool Delayed = true)
         {           
             for (int i = y; i < (y + RectHeight); i++)
             {
@@ -47,6 +49,62 @@ namespace Raylia.LedMatris
 
             if (!Delayed) this.Write();
         }
+
+        /// <summary>
+        /// RGB tesd
+        /// </summary>
+        internal void Test0()
+        {
+            Clear();
+            // check the colors
+            SetColor(0, 0xff0000);
+            SetColor(1, 0x00ff00);
+            SetColor(2, 0x00ff00);
+            SetColor(3, 0x0000ff);
+            SetColor(4, 0x0000ff);
+            SetColor(5, 0x0000ff);
+            Write();
+            Thread.Sleep(1000);
+        }
+
+        public virtual void Test1()
+        {
+            for (int i = 0; i < LedCount; i++)
+            {
+                SetColor(i, 0x0000ff);
+                Write();
+                Thread.Sleep(1);
+            }
+        }
+
+        public virtual void Test2()
+        {
+            for (int i = 0; i < LedCount; i++)
+            {
+                SetColor(i, 0x00ff00);
+                Write();
+                Thread.Sleep(1);
+            }
+        }
+
+        public virtual void Test3()
+        {
+            for (int i = 0; i < LedCount; i++)
+            {
+                SetColor(i, 0xff0000);
+                Write();
+                Thread.Sleep(1);
+            }
+        }
+
+        public virtual void Test4()
+        {
+        }
+
+        public virtual void Test5()
+        {
+        }
+
         /// <summary>
         /// Configures all LEDs to a specific color
         /// </summary>
@@ -54,14 +112,14 @@ namespace Raylia.LedMatris
         /// <param name="y">y position</param>
         /// <param name="RectWith">Rect Width</param>
         /// <param name="RectHeight">Rect Height</param>
-        /// <param name="Attribute">Attribute</param>
+        /// <param name="Color">Color</param>
         /// <param name="Delayed">Do we have to write all LEDs immediately?</param>
-        public void SetColorRect(int x, int y, int RectWith, int RectHeight, ulong Attribute, bool Delayed = true)
+        public void SetColorRect(int x, int y, int RectWith, int RectHeight, int Color, bool Delayed = true)
         {
-            SetColorRect(x, y, RectWith, RectHeight, (byte)(Attribute >> 16), (byte)(Attribute >> 8), (byte)Attribute, Delayed);
+            SetColorRect(x, y, RectWith, RectHeight, (byte)(Color >> 16), (byte)(Color >> 8), (byte)Color, Delayed);
         }
 
-        public void MapBytes(int x, int y, byte[] bytes, int start, int len, ulong Attribute, bool Delayed = true)
+        public void PutRectMap(int x, int y, byte[] bytes, int start, int len, int Attribute, bool Delayed = true)
         {
             for (int i = 0; i < (len - y); i++)
             {
@@ -69,14 +127,14 @@ namespace Raylia.LedMatris
                 // check every bit
                 if (x < 0)
                 {
-                    for (int j = -x; j < 8; j++)
+                    for (int j = -x; j < Width; j++)
                     {
                         SetColorRect(x + j, y + i, 1, 1, ((b & (0x80 >> j)) != 0) ? Attribute : 0, true);
                     }
                 }
                 else
                 {
-                    for (int j = 0; j < (8 - x); j++)
+                    for (int j = 0; j < (Width - x); j++)
                     {
                         SetColorRect(x + j, y + i, 1, 1, ((b & (0x80 >> j)) != 0) ? Attribute : 0, true);
                     }
@@ -85,47 +143,136 @@ namespace Raylia.LedMatris
             if (!Delayed) this.Write();
         }
 
-        public void WriteChar(int x, int y, char c, ulong Attribute, bool Delayed = true)
+        public void PutPixel()
         {
-            int index = (byte)c - (byte)(' ');
-
-            MapBytes(x, y, Font8x8.TinyFont, 4 + index * 8, 8, Attribute, Delayed);
         }
 
-        public void WriteText(int x, int y, string text, ulong Attribute, int Delay)
+        /// <summary>
+        /// Write a Char in a postion with colors
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="c"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="delayed"></param>
+        public virtual void WriteChar(int x, int y, char c, int color, int bgColor = 0, bool delayed = true)
         {
-            for (int i = 0; i < text.Length; i++)
+            // put the font map
+            int start = (int)c - (int)' ';
+            start = 4 + start * 8;
+
+            for (int i = 0; i < (8 - y); i++)
             {
-                WriteChar(x, y, text[i], Attribute, false);
-                Thread.Sleep(Delay);
+                byte b = CurrentFont[start + i];
+             
+                // check every bit
+                if (x <= 0)
+                {
+                    for (int j = -x; j < 8; j++)
+                    {
+                        if ((b & (0x80 >> j)) != 0)
+                        {
+                            SetColorRect(x + j, y + i, 1, 1, color);
+                        }
+                        else if (bgColor >= 0)
+                        {
+                            SetColorRect(x + j, y + i, 1, 1, bgColor);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int j = 0; (x + j < Width) && j < 8; j++)
+                    {
+                        if ((b & (0x80 >> j)) != 0)
+                        {
+                            SetColorRect(x + j, y + i, 1, 1, color);
+                        }
+                        else if (bgColor >= 0)
+                        {
+                            SetColorRect(x + j, y + i, 1, 1, bgColor);
+                        }
+                    }
+                }
             }
+            if (!delayed) this.Write();
         }
 
-        internal void ScrollLeftText(int x, int y, string text, ulong Attribute, int Delay)
+        public virtual void WriteText(int x, int y, string text, int color, int bgColor = 0, Boolean Delayed = true)
         {
-            for (int i = 0; i < text.Length - 1; i++)
+            WriteChar(x, y, text[0], color, bgColor, Delayed);
+        }
+
+        public virtual void ScrollLeftText(int x, int y, string text, int color, int Delay)
+        {
+            int chars = Width / 8;
+            int max = text.Length - chars;
+            for (int i = 0; i < max; i++)
             {
                 int xx = 0;
-                for (int col = 0; col < 8; col++)
+                for (int col = 0; col < Width; col++)
                 {
                     xx = x - col;
-                    WriteChar(xx, y, text[i], Attribute, true);
-                    WriteChar(xx + 8, y, text[i + 1], Attribute, true);
+                    for (int j = 0; j < chars; j++)
+                    {
+                        WriteChar(xx + 8 * j, y, text[i + j], color);
+                    }
                     this.Write();
                     Thread.Sleep(Delay);
                 }
             }
         }
 
-        private int calcCharWith(char c)
+        public void ScrollCompactLeftText(int x, int y, string text, int color, int Delay)
+        {
+            byte[][] textMap = new byte[text.Length][];
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                textMap[i] = new byte[8];
+                int index = (byte)text[i] - (byte)(' ');
+                for (int j = 0; j < 8; j++)
+                {
+                    textMap[i][j] = CurrentFont[index + j];
+                }
+            }
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                PutRectMap(x, y, textMap[i], 0, 8, color, true);
+                this.Write();
+                Thread.Sleep(Delay);
+
+                // Shift left buffer
+                ShiftLeftTheBuffer(textMap);
+            }
+
+        }
+
+        private void ShiftLeftTheBuffer(byte[][] textMap)
+        {
+            //byte carry;
+        }
+
+        private int CalcCharWith(char c)
         {
             return 0;
         }
 
-        public void Claer()
+        public void Clear(int color = 0, bool Delayed = true)
         {
-            SetColorAll(0x000000, false);
+            SetColorAll(color, Delayed);
         }
 
+        public void TestRows()
+        {
+            for (int i = 0; i < LedCount; i++)
+            {
+                SetColor(i, 0x0000ff);
+                Write();
+                Thread.Sleep(1);
+            }
+        }
     }
 }
