@@ -160,7 +160,7 @@ namespace Raylia.LedMatrix
         {
             // put the font map
             int start = (int)c - (int)' ';
-            start = 4 + start * 8;
+            start = 4 + (start << 3);
 
             for (int i = 0; i < (8 - y); i++)
             {
@@ -204,7 +204,7 @@ namespace Raylia.LedMatrix
             WriteChar(x, y, text[0], color, bgColor, Delayed);
         }
 
-        public virtual void ScrollLeftText(int x, int y, string text, int color, int Delay)
+        public virtual void ScrollLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 300)
         {
             int chars = Width / 8;
             int max = text.Length - chars;
@@ -216,7 +216,7 @@ namespace Raylia.LedMatrix
                     xx = x - col;
                     for (int j = 0; j < chars; j++)
                     {
-                        WriteChar(xx + 8 * j, y, text[i + j], color);
+                        WriteChar(xx + 8 * j, y, text[i + j], color, bgColor);
                     }
                     this.Write();
                     Thread.Sleep(Delay);
