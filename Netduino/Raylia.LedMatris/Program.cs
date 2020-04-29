@@ -65,7 +65,7 @@ namespace Raylia.LedMatrix
                             matrix.Claer();
                             Thread.Sleep(1000);
 
-                            matrix.ScrollLeftText(1, 0, " Hello World! ... Hello World! ... Hello World! ... Hello World! ", 0x00ff00L, 200);
+                            matrix.ScrollToLeftText(1, 0, " Hello World! ... Hello World! ... Hello World! ... Hello World! ", 0x00ff00L, 200);
 
                             matrix.Claer();
                             Thread.Sleep(1000);

@@ -44,7 +44,10 @@ namespace Raylia.LedMatrix
 
             while (true)
             {
-                ScrollLeftText(1, 0, "abcdefghijk", 0x130000, 7);
+                ScrollToLeftText(1, 0, "abcdefghijk", 0x130000, 15);
+                Thread.Sleep(500);
+                ScrollToRightText(1, 0, "abcdefghijk", 0x130000, 15);
+                Thread.Sleep(500);
             }
             //Thread.Sleep(500);
         }
@@ -108,7 +111,16 @@ namespace Raylia.LedMatrix
             if (!Delayed) this.Write();
         }
 
-        public override void ScrollLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        /// <summary>
+        /// Scroll text from right to left
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="Delay"></param>
+        public override void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
         {
             int chars = Width >> 3;
             int max = text.Length << 3;
@@ -116,6 +128,8 @@ namespace Raylia.LedMatrix
             Clear(bgColor);
 
             int offset = Width;
+
+            // loop trough all pixel columns in whole text banner
             for (int i = 0; i < max;)
             {
                 int charIndex = i >> 3;
@@ -123,12 +137,17 @@ namespace Raylia.LedMatrix
                 int xx = x - charMode;
                 for (int j = charIndex; j < text.Length && xx < Width; xx += 8, j++)
                 {
+                    if (j > charIndex + 5)
+                    {
+                        break;
+                    }
                     WriteChar(offset + xx, y, text[j], color, bgColor);
                 }
 
                 this.Write();
                 Thread.Sleep(Delay);
 
+                // Make it possible to start with clean screen
                 if (offset > 0)
                 {
                     offset--;
@@ -136,6 +155,54 @@ namespace Raylia.LedMatrix
                 else
                 {
                     i++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Scroll text from left to right
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="Delay"></param>
+        public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        {
+            int chars = Width >> 3;
+            int max = text.Length << 3;
+
+            Clear(bgColor);
+
+            int offset = Width;
+
+            // loop trough all pixel columns in whole text banner
+            for (int i = max - 1; i >= 0;)
+            {
+                int charIndex = i >> 3;
+                int charMode = i & 7;
+                int xx = -x + charMode;
+                for (int j = charIndex; j >= 0 && xx < Width; xx += 8, j--)
+                {
+                    if (j < charIndex - 5)
+                    {
+                        break;
+                    }
+                    WriteChar(Width - (offset + xx), y, text[j], color, bgColor);
+                }
+
+                this.Write();
+                Thread.Sleep(Delay);
+
+                // Make it possible to start with clean screen
+                if (offset > 0)
+                {
+                    offset--;
+                }
+                else
+                {
+                    i--;
                 }
             }
         }

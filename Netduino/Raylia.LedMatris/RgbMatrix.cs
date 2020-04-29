@@ -204,7 +204,16 @@ namespace Raylia.LedMatrix
             WriteChar(x, y, text[0], color, bgColor, Delayed);
         }
 
-        public virtual void ScrollLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 300)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="Delay"></param>
+        public virtual void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 300)
         {
             int chars = Width / 8;
             int max = text.Length - chars;
@@ -224,48 +233,25 @@ namespace Raylia.LedMatrix
             }
         }
 
-        public void ScrollCompactLeftText(int x, int y, string text, int color, int Delay)
+        public virtual void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
         {
-            byte[][] textMap = new byte[text.Length][];
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                textMap[i] = new byte[8];
-                int index = (byte)text[i] - (byte)(' ');
-                for (int j = 0; j < 8; j++)
-                {
-                    textMap[i][j] = CurrentFont[index + j];
-                }
-            }
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                PutRectMap(x, y, textMap[i], 0, 8, color, true);
-                this.Write();
-                Thread.Sleep(Delay);
-
-                // Shift left buffer
-                ShiftLeftTheBuffer(textMap);
-            }
 
         }
-
-        private void ShiftLeftTheBuffer(byte[][] textMap)
-        {
-            //byte carry;
-        }
-
-        private int CalcCharWith(char c)
-        {
-            return 0;
-        }
-
+ 
+        /// <summary>
+        /// Clear matrix
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="Delayed"></param>
         public void Clear(int color = 0, bool Delayed = true)
         {
             SetColorAll(color, Delayed);
         }
 
-        public void TestRows()
+        /// <summary>
+        /// Test all leds
+        /// </summary>
+        public void TestLeds()
         {
             for (int i = 0; i < LedCount; i++)
             {
