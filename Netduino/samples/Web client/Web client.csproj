@@ -8,7 +8,7 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4067ADF7-FC95-48A6-8D3C-618B232EA887}</ProjectGuid>
-    <TargetFrameworkVersion>v4.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,13 +42,13 @@
     <Reference Include="SecretLabs.NETMF.Hardware.NetduinoPlus" />
     <Reference Include="System" />
     <Reference Include="Toolbox.NETMF.NET.Core">
-      <HintPath>..\..\..\Release (4.2)\Toolbox.NETMF.NET.Core.dll</HintPath>
+      <HintPath>..\..\toolbox\NET.Core\bin\Release\Toolbox.NETMF.NET.Core.dll</HintPath>
     </Reference>
     <Reference Include="Toolbox.NETMF.NET.HTTP_Client">
-      <HintPath>..\..\..\Release (4.2)\Toolbox.NETMF.NET.HTTP_Client.dll</HintPath>
+      <HintPath>..\..\toolbox\NET.HTTP_Client\bin\Release\Toolbox.NETMF.NET.HTTP_Client.dll</HintPath>
     </Reference>
     <Reference Include="Toolbox.NETMF.NET.Integrated">
-      <HintPath>..\..\..\Release (4.2)\Toolbox.NETMF.NET.Integrated.dll</HintPath>
+      <HintPath>..\..\toolbox\NET.Integrated\bin\Release\Toolbox.NETMF.NET.Integrated.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

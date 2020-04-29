@@ -13,6 +13,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Core", "toolb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.Netduino", "toolbox\Hardware.Netduino\Toolbox.NETMF.Hardware.Netduino.csproj", "{4A22572A-CC3D-455E-A666-D21CA25D2246}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.Http", "Raylia.Http\Raylia.Http.csproj", "{A062AC3D-FA8E-4BF9-BE62-300452FE3B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web client", "samples\Web client\Web client.csproj", "{4067ADF7-FC95-48A6-8D3C-618B232EA887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.NET.HTTP_Client", "toolbox\NET.HTTP_Client\Toolbox.NETMF.NET.HTTP_Client.csproj", "{98372873-5E4F-4DCB-88C6-9E67E8750D4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.NET.Core", "toolbox\NET.Core\Toolbox.NETMF.NET.Core.csproj", "{795139CB-18FF-4339-99D2-06B40E9F8C6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.NET.Integrated", "toolbox\NET.Integrated\Toolbox.NETMF.NET.Integrated.csproj", "{235C114E-0757-4D8B-9527-359A22B42C6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +51,28 @@ Global
 		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A22572A-CC3D-455E-A666-D21CA25D2246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A062AC3D-FA8E-4BF9-BE62-300452FE3B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A062AC3D-FA8E-4BF9-BE62-300452FE3B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A062AC3D-FA8E-4BF9-BE62-300452FE3B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A062AC3D-FA8E-4BF9-BE62-300452FE3B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4067ADF7-FC95-48A6-8D3C-618B232EA887}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{98372873-5E4F-4DCB-88C6-9E67E8750D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98372873-5E4F-4DCB-88C6-9E67E8750D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98372873-5E4F-4DCB-88C6-9E67E8750D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98372873-5E4F-4DCB-88C6-9E67E8750D4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795139CB-18FF-4339-99D2-06B40E9F8C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795139CB-18FF-4339-99D2-06B40E9F8C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795139CB-18FF-4339-99D2-06B40E9F8C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795139CB-18FF-4339-99D2-06B40E9F8C6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{235C114E-0757-4D8B-9527-359A22B42C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{235C114E-0757-4D8B-9527-359A22B42C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{235C114E-0757-4D8B-9527-359A22B42C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{235C114E-0757-4D8B-9527-359A22B42C6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

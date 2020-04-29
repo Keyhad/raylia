@@ -44,6 +44,9 @@ namespace Web_client
 
             // Gets the response as a string
             Debug.Print(Response.ToString());
+
+            //Trace.Print("Current date according to www.netmftoolbox.com: " + Response.ResponseHeader("date"));
+            //Trace.Print(Response.ToString());
         }
 
     }

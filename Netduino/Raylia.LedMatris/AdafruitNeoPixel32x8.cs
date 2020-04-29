@@ -41,8 +41,12 @@ namespace Raylia.LedMatrix
         public override void Test5()
         {
             Clear();
-            ScrollLeftText(1, 0, "abcdefghijk", 0x130000, 7);
-            Thread.Sleep(500);
+
+            while (true)
+            {
+                ScrollLeftText(1, 0, "abcdefghijk", 0x130000, 7);
+            }
+            //Thread.Sleep(500);
         }
 
         /// <summary>
@@ -109,18 +113,30 @@ namespace Raylia.LedMatrix
             int chars = Width >> 3;
             int max = text.Length << 3;
 
-            for (int i = 0; i < max; i++)
+            Clear(bgColor);
+
+            int offset = Width;
+            for (int i = 0; i < max;)
             {
                 int charIndex = i >> 3;
                 int charMode = i & 7;
                 int xx = x - charMode;
                 for (int j = charIndex; j < text.Length && xx < Width; xx += 8, j++)
                 {
-                    WriteChar(xx, y, text[j], color, bgColor);
+                    WriteChar(offset + xx, y, text[j], color, bgColor);
                 }
 
                 this.Write();
                 Thread.Sleep(Delay);
+
+                if (offset > 0)
+                {
+                    offset--;
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
     }
