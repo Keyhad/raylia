@@ -23,6 +23,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.NET.Core", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.NET.Integrated", "toolbox\NET.Integrated\Toolbox.NETMF.NET.Integrated.csproj", "{235C114E-0757-4D8B-9527-359A22B42C6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.WebBanner", "Raylia.WebBanner\Raylia.WebBanner.csproj", "{EBDC377B-8ECE-4C60-8204-34746B7570C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LedMatrixDemo", "LedMatrixDemo\LedMatrixDemo.csproj", "{1076CDD0-1F4B-4950-B211-57CB146C0B9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecretLabs.NETMF.Hardware.Netduino", "..\..\Netduino_SDK\HardwareProviders\Netduino2HardwareProvider\SecretLabs.NETMF.Hardware.Netduino.csproj", "{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +79,22 @@ Global
 		{235C114E-0757-4D8B-9527-359A22B42C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{235C114E-0757-4D8B-9527-359A22B42C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{235C114E-0757-4D8B-9527-359A22B42C6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDC377B-8ECE-4C60-8204-34746B7570C1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1076CDD0-1F4B-4950-B211-57CB146C0B9D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

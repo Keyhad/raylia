@@ -1,12 +1,12 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 using Toolbox.NETMF.NET;
+using System.Threading;
 
 /*
  * Copyright 2011-2014 Stefan Thoolen (http://www.netmftoolbox.com/)
@@ -29,6 +29,7 @@ namespace Web_client
     {
         public static void Main()
         {
+
             // Creates a new web session
             HTTP_Client WebSession = new HTTP_Client(new IntegratedSocket("www.netmftoolbox.com", 80));
 
@@ -45,9 +46,10 @@ namespace Web_client
             // Gets the response as a string
             Debug.Print(Response.ToString());
 
-            //Trace.Print("Current date according to www.netmftoolbox.com: " + Response.ResponseHeader("date"));
-            //Trace.Print(Response.ToString());
-        }
+            Trace.Print("Current date according to www.netmftoolbox.com: " + Response.ResponseHeader("date"));
+            Trace.Print(Response.ToString());
 
+            Thread.Sleep(Timeout.Infinite);
+        }
     }
 }

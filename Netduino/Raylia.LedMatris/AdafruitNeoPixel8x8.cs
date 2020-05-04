@@ -1,6 +1,7 @@
 using System;
 using Microsoft.SPOT;
 using System.Threading;
+using Microsoft.SPOT.Presentation.Media;
 
 namespace Raylia.LedMatrix
 {
@@ -18,6 +19,22 @@ namespace Raylia.LedMatrix
                 WriteChar(x, y, text[i], color, 0, false);
                 Thread.Sleep(Delay);
             }
+        }
+
+        public virtual void PutBmp(int x, int y, Bitmap bmp)
+        {
+            for (int yy = y; yy < bmp.Height; yy++)
+            {
+                for (int xx = x; xx < bmp.Width; xx++)
+                {
+                    PutPixel(xx, yy, bmp.GetPixel(x, y));
+                }
+            }
+        }
+
+        public virtual void PutPixel(int x, int y, Color color)
+        {
+            SetColorRect(x, y, 1, 1, (int)color);
         }
     }
 }

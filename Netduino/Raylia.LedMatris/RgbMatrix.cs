@@ -11,7 +11,7 @@ namespace Raylia.LedMatrix
     {
         private byte[] CurrentFont = Font8x8.Sinclair_S;
 
-        public RgbMatrix(int width, int height): base(RgbLedStrip.Chipsets.WS2812, width * height, SPI_Devices.SPI1)
+        public RgbMatrix(int width, int height): base(Chipsets.WS2812, width * height, SPI_Devices.SPI1, Pins.GPIO_PIN_D7, true)
         {
             this.Width = width;
             this.Height = height;
@@ -53,7 +53,7 @@ namespace Raylia.LedMatrix
         /// <summary>
         /// RGB tesd
         /// </summary>
-        internal void Test0()
+        public void Test0()
         {
             Clear();
             // check the colors
@@ -213,24 +213,24 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public virtual void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 300)
+        public virtual void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
         {
-            int chars = Width / 8;
-            int max = text.Length - chars;
-            for (int i = 0; i < max; i++)
-            {
-                int xx = 0;
-                for (int col = 0; col < Width; col++)
-                {
-                    xx = x - col;
-                    for (int j = 0; j < chars; j++)
-                    {
-                        WriteChar(xx + 8 * j, y, text[i + j], color, bgColor);
-                    }
-                    this.Write();
-                    Thread.Sleep(Delay);
-                }
-            }
+            //int chars = Width / 8;
+            //int max = text.Length - chars;
+            //for (int i = 0; i < max; i++)
+            //{
+            //    int xx = 0;
+            //    for (int col = 0; col < Width; col++)
+            //    {
+            //        xx = x - col;
+            //        for (int j = 0; j < chars; j++)
+            //        {
+            //            WriteChar(xx + 8 * j, y, text[i + j], color, bgColor);
+            //        }
+            //        this.Write();
+            //        Thread.Sleep(Delay);
+            //    }
+            //}
         }
 
         public virtual void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)

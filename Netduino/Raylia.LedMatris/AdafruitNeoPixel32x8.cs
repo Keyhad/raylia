@@ -120,7 +120,7 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public override void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        public override void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
         {
             int chars = Width >> 3;
             int max = text.Length << 3;
@@ -168,37 +168,37 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
         {
             int chars = Width >> 3;
             int max = text.Length << 3;
 
             Clear(bgColor);
 
-            int offset = Width;
+            int offset = -Width;
 
             // loop trough all pixel columns in whole text banner
             for (int i = max - 1; i >= 0;)
             {
                 int charIndex = i >> 3;
                 int charMode = i & 7;
-                int xx = -x + charMode;
-                for (int j = charIndex; j >= 0 && xx < Width; xx += 8, j--)
+                int xx = Width - x - charMode;
+                for (int j = charIndex; j >= 0; xx -= 8, j--)
                 {
                     if (j < charIndex - 5)
                     {
                         break;
                     }
-                    WriteChar(Width - (offset + xx), y, text[j], color, bgColor);
+                    WriteChar(offset + xx, y, text[j], color, bgColor);
                 }
 
                 this.Write();
                 Thread.Sleep(Delay);
 
                 // Make it possible to start with clean screen
-                if (offset > 0)
+                if (offset < 0)
                 {
-                    offset--;
+                    offset++;
                 }
                 else
                 {
