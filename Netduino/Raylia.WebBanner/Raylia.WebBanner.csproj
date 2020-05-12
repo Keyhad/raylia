@@ -70,7 +70,7 @@
       <Project>{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}</Project>
       <Name>SecretLabs.NETMF.Hardware.Netduino</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Raylia.LedMatris\Raylia.LedMatrix.csproj">
+    <ProjectReference Include="..\Raylia.LedMatrix\Raylia.LedMatrix.csproj">
       <Project>{044A0795-4C75-4CFE-9C09-A1A1AC614D86}</Project>
       <Name>Raylia.LedMatrix</Name>
     </ProjectReference>

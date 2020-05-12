@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.LedMatrix", "Raylia.LedMatris\Raylia.LedMatrix.csproj", "{044A0795-4C75-4CFE-9C09-A1A1AC614D86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylia.LedMatrix", "Raylia.LedMatrix\Raylia.LedMatrix.csproj", "{044A0795-4C75-4CFE-9C09-A1A1AC614D86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.Core", "toolbox\Hardware.Core\Toolbox.NETMF.Hardware.Core.csproj", "{DA3E4C2A-C1DC-44CB-A0FE-DF2F5EB34664}"
 EndProject
@@ -28,6 +28,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LedMatrixDemo", "LedMatrixDemo\LedMatrixDemo.csproj", "{1076CDD0-1F4B-4950-B211-57CB146C0B9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecretLabs.NETMF.Hardware.Netduino", "..\..\Netduino_SDK\HardwareProviders\Netduino2HardwareProvider\SecretLabs.NETMF.Hardware.Netduino.csproj", "{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.Ic74HC165", "toolbox\Hardware.Ic74HC165\Toolbox.NETMF.Hardware.Ic74HC165.csproj", "{FF658E03-3FFA-4EC1-A469-5279C05B640B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toolbox.NETMF.Hardware.LolShield", "toolbox\Hardware.LolShield\Toolbox.NETMF.Hardware.LolShield.csproj", "{05F8CC41-CF7A-49E3-95EC-CACBAEEA84A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +99,14 @@ Global
 		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F48ACBDC-F8F1-41D1-A66F-0CB52740F94F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF658E03-3FFA-4EC1-A469-5279C05B640B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF658E03-3FFA-4EC1-A469-5279C05B640B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF658E03-3FFA-4EC1-A469-5279C05B640B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF658E03-3FFA-4EC1-A469-5279C05B640B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F8CC41-CF7A-49E3-95EC-CACBAEEA84A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F8CC41-CF7A-49E3-95EC-CACBAEEA84A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F8CC41-CF7A-49E3-95EC-CACBAEEA84A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F8CC41-CF7A-49E3-95EC-CACBAEEA84A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

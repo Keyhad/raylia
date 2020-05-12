@@ -5,6 +5,8 @@ using Raylia.LedMatrix;
 using System.Threading;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 using Toolbox.NETMF.Hardware;
+using Microsoft.SPOT.Presentation.Media;
+using Microsoft.SPOT.Presentation.Controls;
 
 namespace LedMatrixDemo
 {
@@ -12,17 +14,31 @@ namespace LedMatrixDemo
     {
         public static void Main()
         {
-            RgbMatrix matrix = new AdafruitNeoPixel32x8();
+            // turn off Ethernet in case of Netduino2Plus
+            var ethernetPower = new OutputPort((Cpu.Pin)47, false);
+            ethernetPower.Write(false);
+
+            AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
+            matrix.CompactedCharStyle = true;
 
             matrix.Test0();
 
-            IntegratedIRQ Pin0Irq = new IntegratedIRQ(Microsoft.SPOT.Hardware.Cpu.Pin.GPIO_Pin0);
+            byte[] bytes = Properties.Resources.GetBytes(Properties.Resources.BinaryResources.TEST2);
+
+            //matrix.PutBytes(0, 0, 32, 8, bytes, true);
+
+            //using (Bitmap bmp = new Bitmap(bytes, Bitmap.BitmapImageType.Jpeg))
+            //{
+            //    matrix.PutBmp(0, 0, bmp, true);
+            //}
+
+            //Thread.Sleep(5000);
 
             while (true)
             {
-                matrix.ScrollToRightText(1, 0, "abcdefghijk", 0x130000, 50, 300);
+                matrix.ScrollToRightText(1, 0, "0 1234 0", 0x1f0000, 0x001000, 100);
                 Thread.Sleep(500);
-                matrix.ScrollToLeftText(1, 0, "abcdefghijk", 0x130000, 50, 300);
+                matrix.ScrollToLeftText(1, 0, "0 abcd 0", 0x1f0000, 0x001000, 100);
                 Thread.Sleep(500);
             }
         }
