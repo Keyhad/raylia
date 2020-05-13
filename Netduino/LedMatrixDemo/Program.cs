@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Raylia.LedMatrix;
@@ -19,7 +19,7 @@ namespace LedMatrixDemo
             ethernetPower.Write(false);
 
             AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
-            matrix.CompactedCharStyle = true;
+            matrix.FontManager.SelectFont(Fonts.Farsi);
 
             matrix.Test0();
 
@@ -34,12 +34,36 @@ namespace LedMatrixDemo
 
             //Thread.Sleep(5000);
 
+            //FarsiTranslator.Dump();
+
             while (true)
             {
-                matrix.ScrollToRightText(1, 0, "012345678", 0x1f0000, 0x000010, 50);
-//                Thread.Sleep(500);
-                //matrix.ScrollToLeftText(1, 0, "0123456789000111222333444555666777888999", 0x1f0000, 0x001000, 100);
+#if false
+                matrix.Clear(0x000010);
+                matrix.FontManager.SelectFont(Fonts.Sinclair);
+                matrix.WriteText(0, 0, "abcd", 0x1f0000, 0x000010, false);
+                Thread.Sleep(5000);
+                matrix.Clear(0x000010);
+                matrix.FontManager.SelectFont(Fonts.Farsi);
+                matrix.WriteTextR(0, 0, "!$ !$", 0x1f0000, 0x000010, false);
+                Thread.Sleep(5000);
+#endif
+                //matrix.ScrollToRightText(1, 0, FarsiTranslator.Translate("آب باباپاتا"), 0x1f0000, 0x000010, 50);
+                //matrix.ScrollToRightText(1, 0, "$!$!$!$!$", 0x1f0000, 0x000010, 50);
+#if true
+                matrix.Clear(0x000010);
+                matrix.FontManager.SelectFont(Fonts.Farsi);
+                matrix.ScrollToRightText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x000010, 50);
+                matrix.Clear(0x000010);
+                matrix.FontManager.SelectFont(Fonts.Sinclair);
+                matrix.ScrollToRightText(0, 0, "abcd 0 efgh", 0x1f0000, 0x000010, 50);
                 Thread.Sleep(500);
+#endif
+
+#if true
+                matrix.ScrollToLeftText(1, 0, "abcdefgh 0 lmn 23 qrt", 0x1f0000, 0x001000, 100);
+                Thread.Sleep(500);
+#endif
             }
         }
 

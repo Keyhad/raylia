@@ -9,24 +9,26 @@ namespace Raylia.LedMatrix
 {
     public class RgbMatrix: RgbLedStrip
     {
+        public bool RightToLeft { get; set; }
         public bool Rotate180 { get; set; }
         public bool Mirror { get; set; }
 
-        private byte[] CurrentFont = Font8x8.Sinclair_S;
+        public Font8x8 FontManager { get; set; }
 
         public RgbMatrix(int width, int height): base(Chipsets.WS2812, width * height, SPI_Devices.SPI1, Pins.GPIO_PIN_D7, true)
         {
+            FontManager = new Font8x8();
+            FontManager.SelectFont(Fonts.Sinclair);
             this.Width = width;
             this.Height = height;
             Rotate180 = true;
             Mirror = false;
-            CompactedCharStyle = false;
         }
 
         public int Height { get; private set; }
 
         public int Width { get; private set; }
-        public bool CompactedCharStyle { get; set; }
+
         public bool FlippChar { get; set; }
 
         public void SetBrigthness(int x, int y, int w, int h, int value)
@@ -207,51 +209,84 @@ namespace Raylia.LedMatrix
         public virtual int WriteChar(int x, int y, char c, int color, int bgColor = 0, bool delayed = true)
         {
             // put the font map
-            int start = (int)c - (int)' ';
-            start = 4 + (start << 3);
+            int fontIndex = (int)c - (int)' ';
+            int rowIndex = 4 + (fontIndex << 3);
 
-            int compactedOffset = 0;
-
-            for (int i = 0; i < 8; i++)
+            int xx = 0;
+            int fp = FontManager.FontPaddings[fontIndex];
+            int row1 = FontManager.GetTop(fp);
+            int row2 = 8 - FontManager.GetBottom(fp) - 1;
+            for (int fontRow = row1; fontRow <= row2; fontRow++)
             {
-                byte b = CurrentFont[start + i];
-                byte bitMask = 0x80;
-                int yy = i + y;
-
-                for (int j = 0; j < 8; j++)
+                byte b = FontManager.CurrentFont[rowIndex + fontRow];
+                int yy = fontRow + y;
+                int bit1 = FontManager.GetLeft(fp);
+                int bit2 = 8 - FontManager.GetRight(fp) - 1;
+                for (int bit = bit1; bit <= bit2; bit++)
                 {
-                    int xx = j + x;
+                    xx = x + (bit - bit1);
 
-                    if ((b & bitMask) != 0)
+                    if ((b & (0x80 >> bit)) != 0)
                     {
                         PutPixel(xx, yy, color);
-                        if (compactedOffset < j)
-                        {
-                            compactedOffset = j;
-                        }
                     }
                     else if (bgColor >= 0)
                     {
                         PutPixel(xx, yy, bgColor);
                     }
-
-                    bitMask >>= 1;
                 }
             }
 
             if (!delayed) this.Write();
 
-            if (!CompactedCharStyle)
+            //Debug.Print("write " + c + " x: " + x.ToString("D3") + ", xx: " + xx.ToString("D3"));
+            return xx + 1;
+        }
+
+        /// <summary>
+        /// Write a Char in a postion with colors
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="c"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="delayed"></param>
+        public virtual int WriteCharR(int x, int y, char c, int color, int bgColor = 0, bool delayed = true)
+        {
+            // put the font map
+            int fontIndex = (int)c - (int)' ';
+            int rowIndex = 4 + (fontIndex << 3);
+
+            int xx = 0;
+            int fp = FontManager.FontPaddings[fontIndex];
+            int row1 = FontManager.GetTop(fp);
+            int row2 = 8 - FontManager.GetBottom(fp) - 1;
+            for (int fontRow = row1; fontRow <= row2; fontRow++)
             {
-                return 8;
+                byte b = FontManager.CurrentFont[rowIndex + fontRow];
+                int yy = fontRow + y;
+                int bit1 = FontManager.GetLeft(fp);
+                int bit2 = 8 - FontManager.GetRight(fp) - 1;
+                for (int bit = bit2; bit >= bit1; bit--)
+                {
+                    xx = x + (bit2 - bit);
+
+                    if ((b & (0x80 >> bit)) != 0)
+                    {
+                        PutPixel(Width - xx - 1, yy, color);
+                    }
+                    else if (bgColor >= 0)
+                    {
+                        PutPixel(Width - xx - 1, yy, bgColor);
+                    }
+                }
             }
 
-            if (c == ' ')
-            {
-                return 2;
-            }
+            if (!delayed) this.Write();
 
-            return compactedOffset + 1;
+            //Debug.Print("write " + c + " x: " + x.ToString("D3") + ", xx: " + xx.ToString("D3"));
+            return xx + 1;
         }
 
         public virtual void WriteText(int x, int y, string text, int color, int bgColor = 0, Boolean Delayed = true)
