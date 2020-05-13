@@ -134,28 +134,26 @@ namespace Raylia.LedMatrix
         /// <param name="Delay"></param>
         public override void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
         {
-            int chars = Width >> 3;
-            int max = text.Length << 3;
-
             Clear(bgColor);
 
             int offset = Width;
 
             // loop trough all pixel columns in whole text banner
-            for (int i = 0; i < max;)
+            for (int i = 0;;)
             {
-                int charIndex = i >> 3;
-                int charMode = i & 7;
-                int xx = x - charMode;
-                int maxColumn = 0;
-                for (int j = charIndex; j < text.Length && xx < Width; xx += maxColumn + 1, j++)
+                int xx = offset - i;
+
+                for (int j = 0; j < text.Length; j++)
                 {
-                    if (j > charIndex + 5)
-                    {
-                        break;
-                    }
-                    maxColumn = WriteChar(offset + xx, y, text[j], color, bgColor);
+                    xx += WriteChar(xx, y, text[j], color, bgColor) + 1;
                 }
+
+                if (xx < 0)
+                {
+                    break;
+                }
+
+                WriteChar(xx, y, ' ', color, bgColor);
 
                 this.Write();
                 Thread.Sleep(Delay);
@@ -183,55 +181,51 @@ namespace Raylia.LedMatrix
         /// <param name="Delay"></param>
         public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
         {
-            int chars = Width >> 3;
-            int max = text.Length << 3;
+            bool tmpRotate180 = Rotate180;
+            bool tmpMirror = Mirror;
 
-            Clear(bgColor);
+            //Rotate180 = !Rotate180;
+            Mirror = !Mirror;
 
-            int offset = -Width;
+            ScrollToLeftText(x, y, text, color, bgColor, Delay);
 
-            // loop trough all pixel columns in whole text banner
-            for (int i = max - 1; i >= 0;)
-            {
-                int charIndex = i >> 3;
-                int charMode = i & 7;
-                int xx = Width - x - charMode;
+            //Rotate180 = tmpRotate180;
+            Mirror = tmpMirror;
 
-                // clear one column before 
-                //for (int j = 0; j < 8; j++)
-                //{
-                //    PutPixel(offset + xx + 8, j, bgColor);
-                //}
+            //Clear(bgColor);
 
-                for (int j = charIndex; j >= 0; xx -= 8, j--)
-                {
-                    if (j < charIndex - 5)
-                    {
-                        break;
-                    }
-                    WriteChar(offset + xx, y, text[j], color, bgColor);
-                }
+            //int offset = Width;
 
-                xx += 8;
-                // clear one column after 
-                for (int j = 0; j < 8; j++)
-                {
-                    PutPixel(offset + xx - 1, j, bgColor);
-                }
+            //// loop trough all pixel columns in whole text banner
+            //for (int i = 0; ;)
+            //{
+            //    int xx = Width - (offset - i);
 
-                this.Write();
-                Thread.Sleep(Delay);
+            //    for (int j = 0; j < text.Length; j++)
+            //    {
+            //        xx += WriteChar(xx, y, text[j], color, bgColor) + 1;
+            //    }
 
-                // Make it possible to start with clean screen
-                if (offset < 0)
-                {
-                    offset++;
-                }
-                else
-                {
-                    i--;
-                }
-            }
+            //    if (xx >= Width)
+            //    {
+            //        break;
+            //    }
+
+            //    WriteChar(xx, y, ' ', color, bgColor);
+
+            //    this.Write();
+            //    Thread.Sleep(Delay);
+
+            //    // Make it possible to start with clean screen
+            //    if (offset > 0)
+            //    {
+            //        offset--;
+            //    }
+            //    else
+            //    {
+            //        i++;
+            //    }
+            //}
         }
     }
 }

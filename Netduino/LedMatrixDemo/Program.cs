@@ -36,9 +36,9 @@ namespace LedMatrixDemo
 
             while (true)
             {
-                matrix.ScrollToRightText(1, 0, "0 1234 0", 0x1f0000, 0x001000, 100);
-                Thread.Sleep(500);
-                matrix.ScrollToLeftText(1, 0, "0 abcd 0", 0x1f0000, 0x001000, 100);
+                matrix.ScrollToRightText(1, 0, "012345678", 0x1f0000, 0x000010, 50);
+//                Thread.Sleep(500);
+//                matrix.ScrollToLeftText(1, 0, "0123456789000111222333444555666777888999", 0x1f0000, 0x001000, 100);
                 Thread.Sleep(500);
             }
         }

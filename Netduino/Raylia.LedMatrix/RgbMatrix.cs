@@ -90,7 +90,7 @@ namespace Raylia.LedMatrix
         /// <param name="y"></param>
         /// <param name="color"></param>
         /// <param name="delayed"></param>
-        public virtual void PutPixel(int x, int y, int color, bool delayed = true)
+        public virtual bool PutPixel(int x, int y, int color, bool delayed = true)
         {
             int xx = x;
             int yy = y;
@@ -109,7 +109,10 @@ namespace Raylia.LedMatrix
             if (xx >= 0 && xx < Width && yy >= 0 && yy < Height)
             {
                 SetColorRect(xx, yy, 1, 1, color, delayed);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>
@@ -208,57 +211,44 @@ namespace Raylia.LedMatrix
 
             int compactedOffset = 0;
 
-            for (int i = 0; i < (8 - y); i++)
+            for (int i = 0; i < 8; i++)
             {
                 byte b = CurrentFont[start + i];
-                int yy = y + i;
+                int yy = i + y;
 
-                // check every bit
-                if (x <= 0)
+                for (int j = 0; j < 8; j++)
                 {
+                    int xx = j + x;
 
-                    for (int j = -x; j < 8; j++)
+                    if ((b & (0x80 >> j)) != 0)
                     {
-                        int xx = x + j;
+                        if (compactedOffset < j)
+                        {
+                            compactedOffset = j;
+                        }
 
-                        if ((b & (0x80 >> j)) != 0)
-                        {
-                            if (j > compactedOffset)
-                            {
-                                compactedOffset = j;
-                            }
-                            PutPixel(xx, yy, color);
-                        }
-                        else if (bgColor >= 0)
-                        {
-                            PutPixel(xx, yy, bgColor);
-                        }
+                        PutPixel(xx, yy, color);
                     }
-                }
-                else
-                {
-                    for (int j = 0; (x + j < Width) && j < 8; j++)
+                    else if (bgColor >= 0)
                     {
-                        int xx = x + j;
-
-                        if ((b & (0x80 >> j)) != 0)
-                        {
-                            if (j > compactedOffset)
-                            {
-                                compactedOffset = j;
-                            }
-                            PutPixel(xx, yy, color);
-                        }
-                        else if (bgColor >= 0)
-                        {
-                            PutPixel(xx, yy, bgColor);
-                        }
+                        PutPixel(xx, yy, bgColor);
                     }
                 }
             }
+
             if (!delayed) this.Write();
 
-            return compactedOffset;
+            if (!CompactedCharStyle)
+            {
+                return 8;
+            }
+
+            if (c == ' ')
+            {
+                return 2;
+            }
+
+            return compactedOffset + 1;
         }
 
         public virtual void WriteText(int x, int y, string text, int color, int bgColor = 0, Boolean Delayed = true)
