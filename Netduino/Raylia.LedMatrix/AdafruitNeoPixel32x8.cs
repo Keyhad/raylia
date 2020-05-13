@@ -138,7 +138,7 @@ namespace Raylia.LedMatrix
 
             int offset = Width;
 
-            // loop trough all pixel columns in whole text banner
+            // loop through all pixel columns in whole text banner
             for (int i = 0;;)
             {
                 int xx = offset - i;
@@ -181,51 +181,45 @@ namespace Raylia.LedMatrix
         /// <param name="Delay"></param>
         public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
         {
-            bool tmpRotate180 = Rotate180;
-            bool tmpMirror = Mirror;
+            int offset = Width;
+            int maxWidth = 0;
 
-            //Rotate180 = !Rotate180;
-            Mirror = !Mirror;
+            for (int j = 0; j < text.Length; j++)
+            {
+                maxWidth += WriteChar(maxWidth, y, text[j], color, bgColor) + 1;
+            }
 
-            ScrollToLeftText(x, y, text, color, bgColor, Delay);
+            Clear(bgColor);
 
-            //Rotate180 = tmpRotate180;
-            Mirror = tmpMirror;
+            // loop through all pixels columns in whole text banner
+            for (int i = 0;;)
+            {
+                int xx = -maxWidth - offset + i;
 
-            //Clear(bgColor);
+                if (xx >= Width)
+                {
+                    break;
+                }
 
-            //int offset = Width;
+                xx += WriteChar(xx, y, ' ', color, bgColor);
+                for (int j = 0; j < text.Length; j++)
+                {
+                    xx += WriteChar(xx, y, text[j], color, bgColor) + 1;
+                }
 
-            //// loop trough all pixel columns in whole text banner
-            //for (int i = 0; ;)
-            //{
-            //    int xx = Width - (offset - i);
+                this.Write();
+                Thread.Sleep(Delay);
 
-            //    for (int j = 0; j < text.Length; j++)
-            //    {
-            //        xx += WriteChar(xx, y, text[j], color, bgColor) + 1;
-            //    }
-
-            //    if (xx >= Width)
-            //    {
-            //        break;
-            //    }
-
-            //    WriteChar(xx, y, ' ', color, bgColor);
-
-            //    this.Write();
-            //    Thread.Sleep(Delay);
-
-            //    // Make it possible to start with clean screen
-            //    if (offset > 0)
-            //    {
-            //        offset--;
-            //    }
-            //    else
-            //    {
-            //        i++;
-            //    }
-            //}
+                // Make it possible to start with clean screen
+                if (offset > 0)
+                {
+                    offset--;
+                }
+                else
+                {
+                    i++;
+                }
+            }
         }
     }
 }

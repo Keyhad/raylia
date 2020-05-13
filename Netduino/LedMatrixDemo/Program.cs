@@ -23,7 +23,7 @@ namespace LedMatrixDemo
 
             matrix.Test0();
 
-            byte[] bytes = Properties.Resources.GetBytes(Properties.Resources.BinaryResources.TEST2);
+            //byte[] bytes = Properties.Resources.GetBytes(Properties.Resources.BinaryResources.TEST2);
 
             //matrix.PutBytes(0, 0, 32, 8, bytes, true);
 
@@ -38,7 +38,7 @@ namespace LedMatrixDemo
             {
                 matrix.ScrollToRightText(1, 0, "012345678", 0x1f0000, 0x000010, 50);
 //                Thread.Sleep(500);
-//                matrix.ScrollToLeftText(1, 0, "0123456789000111222333444555666777888999", 0x1f0000, 0x001000, 100);
+                //matrix.ScrollToLeftText(1, 0, "0123456789000111222333444555666777888999", 0x1f0000, 0x001000, 100);
                 Thread.Sleep(500);
             }
         }

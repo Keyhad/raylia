@@ -27,6 +27,7 @@ namespace Raylia.LedMatrix
 
         public int Width { get; private set; }
         public bool CompactedCharStyle { get; set; }
+        public bool FlippChar { get; set; }
 
         public void SetBrigthness(int x, int y, int w, int h, int value)
         {
@@ -214,25 +215,27 @@ namespace Raylia.LedMatrix
             for (int i = 0; i < 8; i++)
             {
                 byte b = CurrentFont[start + i];
+                byte bitMask = 0x80;
                 int yy = i + y;
 
                 for (int j = 0; j < 8; j++)
                 {
                     int xx = j + x;
 
-                    if ((b & (0x80 >> j)) != 0)
+                    if ((b & bitMask) != 0)
                     {
+                        PutPixel(xx, yy, color);
                         if (compactedOffset < j)
                         {
                             compactedOffset = j;
                         }
-
-                        PutPixel(xx, yy, color);
                     }
                     else if (bgColor >= 0)
                     {
                         PutPixel(xx, yy, bgColor);
                     }
+
+                    bitMask >>= 1;
                 }
             }
 
