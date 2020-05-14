@@ -435,6 +435,13 @@ namespace Raylia.LedMatrix
             }
         }
 
+        public bool isFarsi {
+            get
+            {
+                return CurrentFont == FarsiFont;
+            }
+        }
+
         public int GetTop(int padding)
         {
             return (padding >> 12) & 0xF;
@@ -487,7 +494,7 @@ namespace Raylia.LedMatrix
 
                 if (i == 0)
                 {
-                    if (CurrentFont == FarsiFont)
+                    if (isFarsi)
                     {
                         _FontPaddings[i] = 0x0403;
                     }

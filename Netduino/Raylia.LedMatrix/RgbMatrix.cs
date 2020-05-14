@@ -214,8 +214,8 @@ namespace Raylia.LedMatrix
 
             int xx = 0;
             int fp = FontManager.FontPaddings[fontIndex];
-            int row1 = FontManager.GetTop(fp);
-            int row2 = 8 - FontManager.GetBottom(fp) - 1;
+            int row1 = 0;// FontManager.GetTop(fp);
+            int row2 = 7;// 8 - FontManager.GetBottom(fp) - 1;
             for (int fontRow = row1; fontRow <= row2; fontRow++)
             {
                 byte b = FontManager.CurrentFont[rowIndex + fontRow];
@@ -260,8 +260,8 @@ namespace Raylia.LedMatrix
 
             int xx = 0;
             int fp = FontManager.FontPaddings[fontIndex];
-            int row1 = FontManager.GetTop(fp);
-            int row2 = 8 - FontManager.GetBottom(fp) - 1;
+            int row1 = 0;// FontManager.GetTop(fp);
+            int row2 = 7;// 8 - FontManager.GetBottom(fp) - 1;
             for (int fontRow = row1; fontRow <= row2; fontRow++)
             {
                 byte b = FontManager.CurrentFont[rowIndex + fontRow];

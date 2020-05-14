@@ -204,6 +204,7 @@ namespace Raylia.LedMatrix
         {
             int maxWidth = 0;
 
+            text = " " + text;
             for (int j = 0; j < text.Length; j++)
             {
                 maxWidth = WriteChar(maxWidth, y, text[j], color, bgColor) + 1;
@@ -223,8 +224,15 @@ namespace Raylia.LedMatrix
 
                 for (int j = 0; j < text.Length; j++)
                 {
-                    xx = WriteChar(xx, y, ' ', color, bgColor) - 1;
-                    xx = WriteChar(xx, y, text[j], color, bgColor);
+                    if (FontManager.isFarsi)
+                    {
+                        xx = WriteChar(xx, y, text[j], color, bgColor);
+                    }
+                    else
+                    {
+                        xx = WriteChar(xx, y, ' ', color, bgColor) - 1;
+                        xx = WriteChar(xx, y, text[j], color, bgColor);
+                    }
                 }
 
                 this.Write();

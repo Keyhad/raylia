@@ -51,18 +51,17 @@ namespace LedMatrixDemo
                 //matrix.ScrollToRightText(1, 0, FarsiTranslator.Translate("آب باباپاتا"), 0x1f0000, 0x000010, 50);
                 //matrix.ScrollToRightText(1, 0, "$!$!$!$!$", 0x1f0000, 0x000010, 50);
 #if true
-                matrix.Clear(0x000010);
                 matrix.FontManager.SelectFont(Fonts.Farsi);
                 matrix.ScrollToRightText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x000010, 50);
-                matrix.Clear(0x000010);
                 matrix.FontManager.SelectFont(Fonts.Sinclair);
                 matrix.ScrollToRightText(0, 0, "abcd 0 efgh", 0x1f0000, 0x000010, 50);
-                Thread.Sleep(500);
 #endif
 
 #if true
-                matrix.ScrollToLeftText(1, 0, "abcdefgh 0 lmn 23 qrt", 0x1f0000, 0x001000, 100);
-                Thread.Sleep(500);
+                matrix.FontManager.SelectFont(Fonts.Sinclair);
+                matrix.ScrollToLeftText(0, 0, "abcdefgh 0 lmn 23 qrt", 0x1f0000, 0x001000, 50);
+                matrix.FontManager.SelectFont(Fonts.Farsi);
+                matrix.ScrollToLeftText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x001000, 50);
 #endif
             }
         }
