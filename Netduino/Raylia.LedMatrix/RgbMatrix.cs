@@ -225,14 +225,16 @@ namespace Raylia.LedMatrix
                 for (int bit = bit1; bit <= bit2; bit++)
                 {
                     xx = x + (bit - bit1);
-
-                    if ((b & (0x80 >> bit)) != 0)
+                    if (xx >= 0 && xx < Width)
                     {
-                        PutPixel(xx, yy, color);
-                    }
-                    else if (bgColor >= 0)
-                    {
-                        PutPixel(xx, yy, bgColor);
+                        if ((b & (0x80 >> bit)) != 0)
+                        {
+                            PutPixel(xx, yy, color);
+                        }
+                        else if (bgColor >= 0)
+                        {
+                            PutPixel(xx, yy, bgColor);
+                        }
                     }
                 }
             }
@@ -272,13 +274,16 @@ namespace Raylia.LedMatrix
                 {
                     xx = x + (bit2 - bit);
 
-                    if ((b & (0x80 >> bit)) != 0)
+                    if (xx >= 0 && xx < Width)
                     {
-                        PutPixel(Width - xx - 1, yy, color);
-                    }
-                    else if (bgColor >= 0)
-                    {
-                        PutPixel(Width - xx - 1, yy, bgColor);
+                        if ((b & (0x80 >> bit)) != 0)
+                        {
+                            PutPixel(Width - xx - 1, yy, color);
+                        }
+                        else if (bgColor >= 0)
+                        {
+                            PutPixel(Width - xx - 1, yy, bgColor);
+                        }
                     }
                 }
             }

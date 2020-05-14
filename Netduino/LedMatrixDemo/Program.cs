@@ -54,12 +54,12 @@ namespace LedMatrixDemo
                 matrix.FontManager.SelectFont(Fonts.Farsi);
                 matrix.ScrollToRightText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x000010, 50);
                 matrix.FontManager.SelectFont(Fonts.Sinclair);
-                matrix.ScrollToRightText(0, 0, "abcd 0 efgh", 0x1f0000, 0x000010, 50);
+                matrix.ScrollToRightText(0, 0, "Everyone knows weak security poses a threat to their business ...", 0x1f0000, 0x000010, 50);
 #endif
 
 #if true
                 matrix.FontManager.SelectFont(Fonts.Sinclair);
-                matrix.ScrollToLeftText(0, 0, "abcdefgh 0 lmn 23 qrt", 0x1f0000, 0x001000, 50);
+                matrix.ScrollToLeftText(0, 0, "Everyone knows weak security poses a threat to their business ...", 0x1f0000, 0x001000, 50);
                 matrix.FontManager.SelectFont(Fonts.Farsi);
                 matrix.ScrollToLeftText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x001000, 50);
 #endif
