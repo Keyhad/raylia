@@ -530,11 +530,9 @@ namespace Raylia.LedMatrix
             }
         }
 
-        public bool isFarsi {
-            get
-            {
-                return CurrentFont == MixFont;
-            }
+        public bool isFarsi(char c)
+        { 
+            return (CurrentFont == MixFont) && (c > 0x007E) && (c < 0x00C1);
         }
 
         public ushort GetTop(ushort padding)

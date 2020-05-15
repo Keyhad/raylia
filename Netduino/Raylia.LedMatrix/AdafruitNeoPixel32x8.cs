@@ -167,7 +167,7 @@ namespace Raylia.LedMatrix
             {
                 pos[i] = xp;
                 xp = WriteChar(xp, y, text[i], color, bgColor);
-                if (!FontManager.isFarsi)
+                if (!FontManager.isFarsi(text[i]))
                 {
                     xp++;
                 }
@@ -184,7 +184,7 @@ namespace Raylia.LedMatrix
                     if (xx < Width && xx > -8)
                     {
                         xx = WriteChar(xx, y, text[j], color, bgColor);
-                        if (FontManager.isFarsi)
+                        if (FontManager.isFarsi(text[j]))
                         {
                             // connected letter
                         }
@@ -219,7 +219,7 @@ namespace Raylia.LedMatrix
             {
                 pos[i] = xp;
                 xp = WriteChar(xp, y, text[i], color, bgColor);
-                if (!FontManager.isFarsi)
+                if (!FontManager.isFarsi(text[i]))
                 {
                     xp++;
                 }
@@ -236,7 +236,7 @@ namespace Raylia.LedMatrix
                     if (xx < Width && xx > -8)
                     {
                         xx = WriteChar(xx, y, text[j], color, bgColor);
-                        if (FontManager.isFarsi)
+                        if (FontManager.isFarsi(text[j]))
                         {
                             if (j == 0)
                             {
