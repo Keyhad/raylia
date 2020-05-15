@@ -17,15 +17,6 @@ namespace Raylia.LedMatrix
 
         }
 
-        public void WriteText(int x, int y, string text, int color, int Delay)
-        {
-            for (int i = 0; i < text.Length; i++)
-            {
-                WriteChar(x, y, text[i], color, 0, false);
-                Thread.Sleep(Delay);
-            }
-        }
-
         public virtual void PutBmp(int x, int y, Bitmap bmp, bool delayed = true)
         {
             //for (int yy = y; yy < bmp.Height; yy++)

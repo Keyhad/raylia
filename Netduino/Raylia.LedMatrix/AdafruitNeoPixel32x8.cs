@@ -123,7 +123,7 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="delayed"></param>
-        public void WriteTextR(int x, int y, string text, int color, int bgColor, bool delayed)
+        public void WriteTextR(short x, short y, string text, int color, int bgColor, bool delayed)
         {
             for (int i = text.Length - 1; i >= 0 ; i--)
             {
@@ -140,11 +140,11 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="delayed"></param>
-        public override void WriteText(int x, int y, string text, int color, int bgColor = 0, Boolean delayed = true)
+        public override void WriteText(short x, short y, string text, int color, int bgColor = 0, Boolean delayed = true)
         {
             for (int i = 0; i < text.Length; i++)
             {
-                x = WriteChar(x, y, text[i], color, bgColor) + 1;
+                x = (short)(WriteChar(x, y, text[i], color, bgColor) + 1);
             }
             if (!delayed) this.Write();
         }
@@ -158,31 +158,41 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public override void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
+        public override void ScrollToLeftText(short x, short y, string text, int color, int bgColor = 0, int Delay = 0)
         {
-            int maxWidth = 0;
+            short[] pos = new short[text.Length];
 
-            for (int j = 0; j < text.Length; j++)
+            short xp = 0;
+            for (short i = 0; i < text.Length; i++)
             {
-                maxWidth = WriteChar(maxWidth, y, text[j], color, bgColor) + 1;
+                pos[i] = xp;
+                xp = WriteChar(xp, y, text[i], color, bgColor);
+                if (!FontManager.isFarsi)
+                {
+                    xp++;
+                }
             }
 
             Clear(bgColor);
 
             // loop through all pixels columns in whole text banner
-            for (int i = 0; ; i++)
+            for (short i = 0; i < xp; i++)
             {
-                int xx = Width - i;
-
-                for (int j = 0; j < text.Length; j++)
+                for (short j = 0; j < text.Length; j++)
                 {
-                    xx = WriteChar(xx, y, text[j], color, bgColor);
-                    xx = WriteChar(xx, y, ' ', color, bgColor) - 1;
-                }
-
-                if (xx < 0)
-                {
-                    break;
+                    short xx = (short)(Width + pos[j] - i);
+                    if (xx < Width && xx > -8)
+                    {
+                        xx = WriteChar(xx, y, text[j], color, bgColor);
+                        if (FontManager.isFarsi)
+                        {
+                            // connected letter
+                        }
+                        else
+                        {
+                            xx = WriteChar(xx, y, ' ', color, bgColor);
+                        }
+                    }
                 }
 
                 this.Write();
@@ -200,38 +210,44 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public override void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 0)
+        public override void ScrollToRightText(short x, short y, string text, int color, int bgColor = 0, int Delay = 0)
         {
-            int maxWidth = 0;
+            short[] pos = new short[text.Length];
 
-            for (int j = 0; j < text.Length; j++)
+            short xp = 0;
+            for (short i = 0; i < text.Length; i++)
             {
-                maxWidth = WriteChar(maxWidth, y, text[j], color, bgColor) + 1;
+                pos[i] = xp;
+                xp = WriteChar(xp, y, text[i], color, bgColor);
+                if (!FontManager.isFarsi)
+                {
+                    xp++;
+                }
             }
-
+            
             Clear(bgColor);
 
             // loop through all pixels columns in whole text banner
-            for (int i = 0;; i++)
+            for (short i = 0; i < xp + Width; i++)
             {
-                int xx = -maxWidth + i;
-
-                if (xx >= Width)
+                for (short j = 0; j < text.Length; j++)
                 {
-                    break;
-                }
-
-                xx = WriteChar(xx, y, ' ', color, bgColor);
-                for (int j = 0; j < text.Length; j++)
-                {                       
-                    if (FontManager.isFarsi)
+                    short xx = (short)(-xp + pos[j] + i);
+                    if (xx < Width && xx > -8)
                     {
                         xx = WriteChar(xx, y, text[j], color, bgColor);
-                    }
-                    else
-                    {
-                        xx = WriteChar(xx, y, ' ', color, bgColor) - 1;
-                        xx = WriteChar(xx, y, text[j], color, bgColor);
+                        if (FontManager.isFarsi)
+                        {
+                            if (j == 0)
+                            {
+                                WriteChar((short)(xx - 2), y, ' ', color, bgColor);
+                            }
+                            // connected letter
+                        }
+                        else
+                        {
+                            WriteChar(xx, y, ' ', color, bgColor);
+                        }
                     }
                 }
 

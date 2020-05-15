@@ -170,39 +170,207 @@ namespace Raylia.LedMatrix
         public static string Translate(string text)
         {
             string retValue = "";
-            for (int i = text.Length - 1; i >= 0; i--)
+            
+            for (int i = 0; i < text.Length; i++)
             {
-                retValue += (char)Translate(text[i]);
+                retValue = (Char)Translate(text, i) + retValue;
             }
 
             return retValue;
         }
 
-        public static char Translate(char aChar)
+        static ushort[][] tt = new ushort[][] {
+            new ushort[] { 0x0622, 0x007F},                 // 001: 0622: آ
+            new ushort[] { 0x0627, 0x0080},                 // 001: 0622: ﺍ
+            new ushort[] { 0x0628, 0x0082, 0x0081},         // 003: 0628: ب
+            new ushort[] { 0x067E, 0x0084, 0x0083},         // 005: 067E: پ
+            new ushort[] { 0x062A, 0x0086, 0x0085},         // 007: 062A: ت
+            new ushort[] { 0x062B, 0x0088, 0x0087},         // 009: 062B: ث
+            new ushort[] { 0x062C, 0x008A, 0x0089},         // 011: 062C: ج
+            new ushort[] { 0x0686, 0x008C, 0x008B},         // 013: 0686: چ
+            new ushort[] { 0x062D, 0x008E, 0x008D},         // 015: 062D: ح
+            new ushort[] { 0x062E, 0x0090, 0x008F},         // 017: 062E: خ
+            new ushort[] { 0x062F, 0x0091},                 // 019: 062F: د
+            new ushort[] { 0x0630, 0x0092},                 // 021: 0630: ذ
+            new ushort[] { 0x0631, 0x0093},                 // 023: 0631: ر
+            new ushort[] { 0x0632, 0x0094},                 // 025: 0632: ز
+            new ushort[] { 0x0698, 0x0095},                 // 027: 0698: ژ
+            new ushort[] { 0x0633, 0x0097, 0x0096},         // 029: 0633: س
+            new ushort[] { 0x0634, 0x0099, 0x0098},         // 031: 0634: ش
+            new ushort[] { 0x0635, 0x009B, 0x009A},         // 033: 0635: ص
+            new ushort[] { 0x0636, 0x009D, 0x009C},         // 035: 0636: ض
+            new ushort[] { 0x0637, 0x009F, 0x009E},         // 037: 0637: ط
+            new ushort[] { 0x0638, 0x00A1, 0x00A0},         // 039: 0638: ظ
+            new ushort[] { 0x0639, 0x00A3, 0x00A2, 0x00A1, 0x00A0}, // 041: 0639: ع
+            new ushort[] { 0x063A, 0x00A7, 0x00A6, 0x00A5, 0x00A4}, // 043: 063A: غ
+            new ushort[] { 0x0641, 0x00A9, 0x00A8},         // 045: 0641: ف
+            new ushort[] { 0x0642, 0x00AB, 0x00AA},         // 047: 0642: ق
+            new ushort[] { 0x06A9, 0x00AD, 0x00AC},         // 049: 06A9: ک
+            new ushort[] { 0x06AF, 0x00AF, 0x00AE},         // 051: 06AF: گ
+            new ushort[] { 0x0644, 0x00B1, 0x00B0},         // 053: 0644: ل
+            new ushort[] { 0x0645, 0x00B3, 0x00B2},         // 055: 0645: م
+            new ushort[] { 0x0646, 0x00B5, 0x00B4},         // 057: 0646: ن
+            new ushort[] { 0x0648, 0x00B6},                 // 059: 0648: و
+            new ushort[] { 0x0647, 0x00BA, 0x00B9, 0x00B8, 0x00B7}, // 061: 0647: ه
+            new ushort[] { 0x06CC, 0x00BD, 0x00BC, 0x00BB}, // 063: 06CC: ی
+            new ushort[] { 0x0621, 0x00BE},                 // 065: 0621: ء
+            new ushort[] { 0x061F, 0x00C1},                 // 067: 061F: ؟
+            new ushort[] { 0x06F0, 0x00C2},                 // 069: 06F0: ۰
+            new ushort[] { 0x06F1, 0x00C3},                 // 071: 06F1: ۱
+            new ushort[] { 0x06F2, 0x00C4},                 // 073: 06F2: ۲
+            new ushort[] { 0x06F3, 0x00C5},                 // 075: 06F3: ۳
+            new ushort[] { 0x06F4, 0x00C6},                 // 077: 06F4: ۴
+            new ushort[] { 0x06F5, 0x00C7},                 // 079: 06F5: ۵
+            new ushort[] { 0x06F6, 0x00C8},                 // 081: 06F6: ۶
+            new ushort[] { 0x06F7, 0x00C9},                 // 083: 06F7: ۷
+            new ushort[] { 0x06F8, 0x00CA},                 // 085: 06F8: ۸
+            new ushort[] { 0x06F9, 0x00CB},                 // 087: 06F9: ۹
+        };
+
+        public static char Translate(string text, int i)
         {
             char retValue = ' ';
+            bool lastLetter = (i == text.Length - 1);
+            bool firstLetter = i == 0;
+            bool midLetter = !lastLetter && !firstLetter;
 
-            switch (aChar)
+            for (int ii = 0; ii < tt.Length; ii++)
             {
-                case 'آ':
-                case 'ا':
-                    retValue = '!';
-                    break;
-                case 'ب' :
-                    retValue = '#';
-                    break;
-                case 'ﺑ' :
-                    retValue = '"';
-                    break;
-                case 'ﭘ':
-                    retValue = '$';
-                    break;
-                case 'ﺗ':
-                    retValue = '&';
-                    break;
+                ushort charInt = text[i];
+                if (charInt == tt[ii][0])
+                {
+                    int forms = tt[ii].Length;
+                    
+                    if (forms == 2)
+                    {
+                        retValue = (char)tt[ii][1];
+                        break;
+                    }
+
+                    if (forms == 3)
+                    {
+                        if (!lastLetter && text[i + 1] != ' ')
+                        {
+                            retValue = (char)tt[ii][2];
+                            break;
+                        }
+                        retValue = (char)tt[ii][1];
+                        break;
+                    }
+
+                    if (forms == 4)
+                    {
+                        if (!lastLetter && text[i + 1] != ' ')
+                        {
+                            retValue = (char)tt[ii][3];
+                            break;
+                        }
+                        if (text[i - 1] == ' ')
+                        {
+                            retValue = (char)tt[ii][2];
+                            break;
+                        }
+                        retValue = (char)tt[ii][1];
+                        break;
+                    }
+
+                    if (forms == 5)
+                    {
+                        if (!lastLetter && text[i + 1] != ' ')
+                        {
+                            retValue = (char)tt[ii][3];
+                            break;
+                        }
+                        if (text[i - 1] == ' ')
+                        {
+                            retValue = (char)tt[ii][2];
+                            break;
+                        }
+                        retValue = (char)tt[ii][1];
+                        break;
+                    }
+
+                }
             }
 
             return retValue;
+/*
+            switch (text[i])
+            {
+                case 'آ':
+                    retValue = '~';
+                    break;
+                case 'ا':
+                    retValue = '!';
+                    break;
+                case 'ب':
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = '"';
+                        break;
+                    }
+                    retValue = '#';
+                    break;
+                case (char)0x067e: // 'ﭖ':
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = '$';
+                        break;
+                    }
+                    retValue = '%';
+                    break;
+                case (char)0x062a: // 'ﺕ'
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = '&';
+                        break;
+                    }
+                    retValue = '\'';
+                    break;
+                case (char)0x0648: // 'و':
+                    retValue = 'W';
+                    break;
+                case (char)0x0646: // 'ن':
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = 'U';
+                        break;
+                    }
+                    retValue = 'V';
+                    break;
+                case (char)0x0631: // 'ر':
+                    retValue = '4';
+                    break;
+                case (char)0x0641: // 'ف'
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = 'I';
+                        break;
+                    }
+                    retValue = 'J';
+                    break;
+                case (char)0x0647: // 'ه':
+                    retValue = 'Z';
+                    break;
+                case (char)0x0642: // 'گ'
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = 'O';
+                        break;
+                    }
+                    retValue = 'P';
+                    break;
+                case (char)0x0643: // 'ش'
+                    if (!lastLetter && text[i + 1] != ' ')
+                    {
+                        retValue = '9';
+                        break;
+                    }
+                    retValue = ':';
+                    break;
+            }
+            return retValue;
+*/
         }
     }
 }

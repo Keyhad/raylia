@@ -19,7 +19,7 @@ namespace LedMatrixDemo
             ethernetPower.Write(false);
 
             AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
-            matrix.FontManager.SelectFont(Fonts.Farsi);
+            matrix.FontManager.SelectFont(Fonts.Mix);
 
             matrix.Test0();
 
@@ -48,20 +48,37 @@ namespace LedMatrixDemo
                 matrix.WriteTextR(0, 0, "!$ !$", 0x1f0000, 0x000010, false);
                 Thread.Sleep(5000);
 #endif
-                //matrix.ScrollToRightText(1, 0, FarsiTranslator.Translate("آب باباپاتا"), 0x1f0000, 0x000010, 50);
-                //matrix.ScrollToRightText(1, 0, "$!$!$!$!$", 0x1f0000, 0x000010, 50);
+
 #if true
+                matrix.Clear(0x000010);
+                matrix.FontManager.SelectFont(Fonts.Mix);
+
+                string test0 = "";
+                for (int i = 0; i < 190; i++)
+                {
+                    test0 += (char)(i + 32);
+                }
+
+                string test1 = " .آب بابا پاتون رفته مشهد؛ دیده خبری نیست برگشته ";
+                string all = " آ ﺍ ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ء ؟ ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹  ";
+
+                //matrix.ScrollToLeftText(1, 0, test0, 0x1f0000, 0x000101, 50);
+                matrix.ScrollToRightText(1, 0, FarsiTranslator.Translate(test0), 0x1f0000, 0x000c0c, 50);
+                Thread.Sleep(5000);
+#endif
+
+#if false
                 matrix.FontManager.SelectFont(Fonts.Farsi);
                 matrix.ScrollToRightText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x000010, 50);
                 matrix.FontManager.SelectFont(Fonts.Sinclair);
                 matrix.ScrollToRightText(0, 0, "Everyone knows weak security poses a threat to their business ...", 0x1f0000, 0x000010, 50);
 #endif
 
-#if true
+#if false
                 matrix.FontManager.SelectFont(Fonts.Sinclair);
-                matrix.ScrollToLeftText(0, 0, "Everyone knows weak security poses a threat to their business ...", 0x1f0000, 0x001000, 50);
+                matrix.ScrollToLeftText(0, 0, "Everyone knows weak security poses a threat to their business ...", 0x1f0000, 0x001000, 10);
                 matrix.FontManager.SelectFont(Fonts.Farsi);
-                matrix.ScrollToLeftText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x001000, 50);
+                matrix.ScrollToLeftText(0, 0, "!$!$ !$!$ !$!$ !$!$", 0x1f0000, 0x001000, 10);
 #endif
             }
         }

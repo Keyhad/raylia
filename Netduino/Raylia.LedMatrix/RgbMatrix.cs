@@ -206,25 +206,25 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="delayed"></param>
-        public virtual int WriteChar(int x, int y, char c, int color, int bgColor = 0, bool delayed = true)
+        public virtual short WriteChar(short x, short y, char c, int color, int bgColor = 0, bool delayed = true)
         {
             // put the font map
-            int fontIndex = (int)c - (int)' ';
-            int rowIndex = 4 + (fontIndex << 3);
+            short fontIndex = (short)(c - ' ');
+            short rowIndex = (short)(4 + (fontIndex << 3));
 
-            int xx = 0;
-            int fp = FontManager.FontPaddings[fontIndex];
-            int row1 = 0;// FontManager.GetTop(fp);
-            int row2 = 7;// 8 - FontManager.GetBottom(fp) - 1;
-            for (int fontRow = row1; fontRow <= row2; fontRow++)
+            short xx = 0;
+            ushort fp = FontManager.FontPaddings[fontIndex];
+            short row1 = 0;// FontManager.GetTop(fp);
+            short row2 = 7;// 8 - FontManager.GetBottom(fp) - 1;
+            for (short fontRow = row1; fontRow <= row2; fontRow++)
             {
                 byte b = FontManager.CurrentFont[rowIndex + fontRow];
-                int yy = fontRow + y;
-                int bit1 = FontManager.GetLeft(fp);
-                int bit2 = 8 - FontManager.GetRight(fp) - 1;
-                for (int bit = bit1; bit <= bit2; bit++)
+                short yy = (short)(fontRow + y);
+                short bit1 = (short)FontManager.GetLeft(fp);
+                short bit2 = (short)(8 - FontManager.GetRight(fp) - 1);
+                for (short bit = bit1; bit <= bit2; bit++)
                 {
-                    xx = x + (bit - bit1);
+                    xx = (short)(x + (bit - bit1));
                     if (xx >= 0 && xx < Width)
                     {
                         if ((b & (0x80 >> bit)) != 0)
@@ -242,7 +242,7 @@ namespace Raylia.LedMatrix
             if (!delayed) this.Write();
 
             //Debug.Print("write " + c + " x: " + x.ToString("D3") + ", xx: " + xx.ToString("D3"));
-            return xx + 1;
+            return (short)(xx + 1);
         }
 
         /// <summary>
@@ -254,14 +254,14 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="delayed"></param>
-        public virtual int WriteCharR(int x, int y, char c, int color, int bgColor = 0, bool delayed = true)
+        public virtual short WriteCharR(short x, short y, char c, int color, int bgColor = 0, bool delayed = true)
         {
             // put the font map
             int fontIndex = (int)c - (int)' ';
             int rowIndex = 4 + (fontIndex << 3);
 
             int xx = 0;
-            int fp = FontManager.FontPaddings[fontIndex];
+            ushort fp = FontManager.FontPaddings[fontIndex];
             int row1 = 0;// FontManager.GetTop(fp);
             int row2 = 7;// 8 - FontManager.GetBottom(fp) - 1;
             for (int fontRow = row1; fontRow <= row2; fontRow++)
@@ -291,10 +291,10 @@ namespace Raylia.LedMatrix
             if (!delayed) this.Write();
 
             //Debug.Print("write " + c + " x: " + x.ToString("D3") + ", xx: " + xx.ToString("D3"));
-            return xx + 1;
+            return (short)(xx + 1);
         }
 
-        public virtual void WriteText(int x, int y, string text, int color, int bgColor = 0, Boolean Delayed = true)
+        public virtual void WriteText(short x, short y, string text, int color, int bgColor = 0, Boolean Delayed = true)
         {
             WriteChar(x, y, text[0], color, bgColor, Delayed);
         }
@@ -308,27 +308,20 @@ namespace Raylia.LedMatrix
         /// <param name="color"></param>
         /// <param name="bgColor"></param>
         /// <param name="Delay"></param>
-        public virtual void ScrollToLeftText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        public virtual void ScrollToLeftText(short x, short y, string text, int color, int bgColor = 0, int Delay = 1)
         {
-            //int chars = Width / 8;
-            //int max = text.Length - chars;
-            //for (int i = 0; i < max; i++)
-            //{
-            //    int xx = 0;
-            //    for (int col = 0; col < Width; col++)
-            //    {
-            //        xx = x - col;
-            //        for (int j = 0; j < chars; j++)
-            //        {
-            //            WriteChar(xx + 8 * j, y, text[i + j], color, bgColor);
-            //        }
-            //        this.Write();
-            //        Thread.Sleep(Delay);
-            //    }
-            //}
         }
 
-        public virtual void ScrollToRightText(int x, int y, string text, int color, int bgColor = 0, int Delay = 1)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="bgColor"></param>
+        /// <param name="Delay"></param>
+        public virtual void ScrollToRightText(short x, short y, string text, int color, int bgColor = 0, int Delay = 1)
         {
 
         }

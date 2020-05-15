@@ -13,7 +13,7 @@ namespace Raylia.LedMatrix
 
     public enum Fonts
     {
-        Farsi,
+        Mix,
         Simple,
         Sinclair
     }
