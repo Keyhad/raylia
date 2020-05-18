@@ -12,51 +12,48 @@ namespace Raylia.WebBanner
 {
     public class Program
     {
+        private static string dateString;
+        private static OutputPort EthernetPower;
+
         //private static IntegratedIRQ Pin1Irq;
         //private static IntegratedIRQ Pin2Irq;
 
         public static bool IsConnecting { get; private set; }
 
         public static void Main()
-        {           
-            // There's a 8x8 matrix (64 LEDs) connected to the first SPI bus on the Netduino
-            RgbMatrix matrix = new AdafruitNeoPixel32x8();
-
-            matrix.Test0();
-
-            NetworkInitializer.NetworkConnected += NetworkConnected;
-
-            int delayCon = 0;
-            IsConnecting = true;
-
+        {
+            NetworkInitializer.NetworkConnected += (object sender, EventArgs e) => {
+                IsConnecting = false;
+            };
             OutputPort led = new OutputPort(Pins.ONBOARD_LED, false);
+
+            IsConnecting = true;
+            int counter = 0;
             while (IsConnecting)
             {
                 led.Write(false); // turn on the LED
                 Thread.Sleep(250); // sleep for 250ms
                 led.Write(true); // turn off the LED
-                Thread.Sleep(250); // sleep for 250ms
+                Thread.Sleep(250); // sleep for 250ms                
 
-                if (delayCon++ == 10)
+                if (counter == 10)
                 {
                     NetworkInitializer.InitializeNetwork();
                 }
+                counter++;
             }
 
-            Debug.Print("Network connected!");
+            // There's a 8x8 matrix (64 LEDs) connected to the first SPI bus on the Netduino
+            AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
 
-            // Creates a new web session
-            HTTP_Client WebSession = new HTTP_Client(new IntegratedSocket("www.netmftoolbox.com", 80));
+            PollingAction pollingAction = new PollingAction();
+            pollingAction.DataUpdated += new PollingAction.DataUpdatedDelegate((object sender, EventArgs e)=>
+            {
+                //EthernetPower.Write(false);
+                dateString = pollingAction.DateString;
+            });
 
-            // Requests the latest source
-            HTTP_Client.HTTP_Response Response = WebSession.Get("/helloworld/");
-
-            // Did we get the expected response? (a "200 OK")
-            if (Response.ResponseCode != 200)
-                throw new ApplicationException("Unexpected HTTP response code: " + Response.ResponseCode.ToString());
-
-            var dateString = Response.ResponseHeader("date");
-
+            //EthernetPower = new OutputPort((Cpu.Pin)47,  false);
             //Pin1Irq = new IntegratedIRQ(Pins.GPIO_PIN_D1);
             //Pin1Irq.ID = "D1";
             //Pin1Irq.OnStateChange += OnStateChangeHandler;
@@ -64,21 +61,38 @@ namespace Raylia.WebBanner
             //Pin2Irq.ID = "D2";
             //Pin2Irq.OnStateChange += OnStateChangeHandler;
 
-            var ethernetPower = new OutputPort((Cpu.Pin)47, false);
-            ethernetPower.Write(false);
+            // power off networkd
+            //var ethernetPower = new OutputPort((Cpu.Pin)47, false);
 
+            // software reset 
+            //Microsoft.SPOT.Hardware.PowerState.RebootDevice(true);
+
+            matrix.Test0();
+            matrix.SetBrightnessAll(50);
+            dateString = "";
+            counter = 10;
             while (true)
             {
-                matrix.ScrollToLeftText(1, 0, dateString, 0x130000, 100);
+                // power off network
+                //ethernetPower.Write(false);
+                //Thread.Sleep(500);
+
+                //if (!EthernetPower.Read())
+                {
+                    matrix.ScrollToLeftText(1, 0, dateString, 0x1f0000, 0x000c0c, 50);
+                    //EthernetPower.Write(true);
+                }
                 Thread.Sleep(500);
+                if (counter == 12)
+                {
+                    pollingAction.CheckTheMessage();
+                    //   Thread.Sleep(30000);
+                    counter = 0;
+                }
+                counter++;
             }
         }
-
-        private static void NetworkConnected(object sender, EventArgs e)
-        {
-            IsConnecting = false;
-        }
-
+        
         private static void OnStateChangeHandler(IIRQPort IrqPort, bool State, DateTime Time)
         {
             Debug.Print("OnStateChangeHandler: " + IrqPort.ID + " - " + State + " - " + Time.ToString());

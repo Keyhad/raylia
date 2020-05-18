@@ -14,10 +14,6 @@ namespace LedMatrixDemo
     {
         public static void Main()
         {
-            // turn off Ethernet in case of Netduino2Plus
-            var ethernetPower = new OutputPort((Cpu.Pin)47, false);
-            ethernetPower.Write(false);
-
             AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
             matrix.FontManager.SelectFont(Fonts.Mix);
 
@@ -35,6 +31,11 @@ namespace LedMatrixDemo
             //Thread.Sleep(5000);
 
             //FarsiTranslator.Dump();
+
+            // turn off Ethernet in case of Netduino2Plus
+            var ethernetPower = new OutputPort((Cpu.Pin)47, false);
+            ethernetPower.Write(false);
+            Thread.Sleep(5000);
 
             while (true)
             {
@@ -59,8 +60,10 @@ namespace LedMatrixDemo
                     test0 += (char)(i + 32);
                 }
 
-                string test1 = " .آب بابا پاتون رفته مشهد؛ دیده خبری نیست برگشته ";
-                string all = " آ ﺍ ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ء ؟ ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹  ";
+                //string test1 = " .آب بابا پاتون رفته مشهد؛ دیده خبری نیست برگشته ";
+                //string all = " آ ﺍ ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ء ؟ ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹  ";
+
+                matrix.SetBrightnessAll(50);
 
                 matrix.ScrollToLeftText(1, 0, test0, 0x1f0000, 0x000c0c, 50);
                 //matrix.ScrollToRightText(1, 0, FarsiTranslator.Translate(test1), 0x1f0000, 0x000c0c, 50);

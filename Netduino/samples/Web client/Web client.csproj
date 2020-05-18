@@ -35,14 +35,6 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Json.NetMF, Version=1.3.1.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Json.NETMF.1.3.1\lib\netmf43\Json.NetMF.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Maple, Version=0.14.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Maple.0.14.29\lib\netmf43\Maple.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Hardware.PWM" />
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
@@ -52,17 +44,27 @@
     <Reference Include="SecretLabs.NETMF.Hardware" />
     <Reference Include="SecretLabs.NETMF.Hardware.NetduinoPlus" />
     <Reference Include="System" />
-    <Reference Include="Toolbox.NETMF.NET.Core">
-      <HintPath>..\..\toolbox\NET.Core\bin\Release\Toolbox.NETMF.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Toolbox.NETMF.NET.HTTP_Client">
-      <HintPath>..\..\toolbox\NET.HTTP_Client\bin\Release\Toolbox.NETMF.NET.HTTP_Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Toolbox.NETMF.NET.Integrated">
-      <HintPath>..\..\toolbox\NET.Integrated\bin\Release\Toolbox.NETMF.NET.Integrated.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\toolbox\Core\Toolbox.NETMF.Core.csproj">
+      <Project>{CBF2AD5F-2168-4605-BFCB-0256D65AD95B}</Project>
+      <Name>Toolbox.NETMF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\toolbox\Hardware.Core\Toolbox.NETMF.Hardware.Core.csproj">
+      <Project>{DA3E4C2A-C1DC-44CB-A0FE-DF2F5EB34664}</Project>
+      <Name>Toolbox.NETMF.Hardware.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\toolbox\NET.Core\Toolbox.NETMF.NET.Core.csproj">
+      <Project>{795139CB-18FF-4339-99D2-06B40E9F8C6D}</Project>
+      <Name>Toolbox.NETMF.NET.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\toolbox\NET.HTTP_Client\Toolbox.NETMF.NET.HTTP_Client.csproj">
+      <Project>{98372873-5E4F-4DCB-88C6-9E67E8750D4E}</Project>
+      <Name>Toolbox.NETMF.NET.HTTP_Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\toolbox\NET.Integrated\Toolbox.NETMF.NET.Integrated.csproj">
+      <Project>{235C114E-0757-4D8B-9527-359A22B42C6D}</Project>
+      <Name>Toolbox.NETMF.NET.Integrated</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

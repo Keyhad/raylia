@@ -175,6 +175,7 @@ namespace Raylia.LedMatrix
 
             Clear(bgColor);
 
+            xp += (short)Width;
             // loop through all pixels columns in whole text banner
             for (short i = 0; i < xp; i++)
             {

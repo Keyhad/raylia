@@ -37,7 +37,9 @@
     <StartupObject>Raylia.WebBanner.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DebuggerBrowsableState.cs" />
     <Compile Include="NetworkInitializer.cs" />
+    <Compile Include="PollingAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">
