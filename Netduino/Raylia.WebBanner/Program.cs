@@ -14,6 +14,7 @@ namespace Raylia.WebBanner
     {
         private static string dateString;
         private static OutputPort EthernetPower;
+        private static AdafruitNeoPixel32x8 matrix;
 
         //private static IntegratedIRQ Pin1Irq;
         //private static IntegratedIRQ Pin2Irq;
@@ -22,6 +23,8 @@ namespace Raylia.WebBanner
 
         public static void Main()
         {
+            // power off networkd
+            //var ethernetPower = new OutputPort((Cpu.Pin)47, true);
             NetworkInitializer.NetworkConnected += (object sender, EventArgs e) => {
                 IsConnecting = false;
             };
@@ -42,9 +45,6 @@ namespace Raylia.WebBanner
                 }
                 counter++;
             }
-
-            // There's a 8x8 matrix (64 LEDs) connected to the first SPI bus on the Netduino
-            AdafruitNeoPixel32x8 matrix = new AdafruitNeoPixel32x8();
 
             PollingAction pollingAction = new PollingAction();
             pollingAction.DataUpdated += new PollingAction.DataUpdatedDelegate((object sender, EventArgs e)=>
@@ -67,29 +67,36 @@ namespace Raylia.WebBanner
             // software reset 
             //Microsoft.SPOT.Hardware.PowerState.RebootDevice(true);
 
-            matrix.Test0();
-            matrix.SetBrightnessAll(50);
+            Thread.Sleep(10000);
+
             dateString = "";
-            counter = 10;
+            counter = 0;
             while (true)
             {
-                // power off network
-                //ethernetPower.Write(false);
-                //Thread.Sleep(500);
-
-                //if (!EthernetPower.Read())
-                {
-                    matrix.ScrollToLeftText(1, 0, dateString, 0x1f0000, 0x000c0c, 50);
-                    //EthernetPower.Write(true);
-                }
-                Thread.Sleep(500);
-                if (counter == 12)
+                if (counter == 0)
                 {
                     pollingAction.CheckTheMessage();
-                    //   Thread.Sleep(30000);
-                    counter = 0;
+                    using (var ethernetPower = new OutputPort((Cpu.Pin)47, true))
+                    {
+                        // power off network
+                        ethernetPower.Write(false);
+                    }
+
+                    if (matrix == null)
+                    {
+                        // There's a 8x8 matrix (64 LEDs) connected to the first SPI bus on the Netduino
+                        matrix = new AdafruitNeoPixel32x8(50, 0x000c0c);
+                    }
                 }
+
+                matrix.ScrollToLeftText(1, 0, dateString, 0x1f0000, 0x000c0c, 50);
+
                 counter++;
+                if (counter == 3)
+                {
+                    matrix.Clear(0, false);
+                    Microsoft.SPOT.Hardware.PowerState.RebootDevice(false);
+                }
             }
         }
         

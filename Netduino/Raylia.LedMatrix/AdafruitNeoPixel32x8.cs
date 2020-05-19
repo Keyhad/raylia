@@ -6,7 +6,8 @@ namespace Raylia.LedMatrix
 {
     public class AdafruitNeoPixel32x8: AdafruitNeoPixel8x8
     {
-        public AdafruitNeoPixel32x8() : base(32, 8)
+        public AdafruitNeoPixel32x8(byte Default_Brightness = 150, int Default_Bg = 0) : 
+            base(32, 8, Default_Brightness, Default_Bg)
         {
         }
 

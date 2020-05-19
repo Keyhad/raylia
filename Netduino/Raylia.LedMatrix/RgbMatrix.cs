@@ -15,12 +15,13 @@ namespace Raylia.LedMatrix
 
         public Font8x8 FontManager { get; set; }
 
-        public RgbMatrix(int width, int height): base(Chipsets.WS2812, width * height, SPI_Devices.SPI1, Pins.GPIO_PIN_D7, true)
+        public RgbMatrix(int Matrix_Width, int Matrix_Height, byte Default_Brightness = 150, int Default_Bg = 0) : 
+            base(Chipsets.WS2812, Matrix_Width * Matrix_Height, SPI_Devices.SPI1, Pins.GPIO_PIN_D7, true, Default_Brightness, Default_Bg)
         {
             FontManager = new Font8x8();
             FontManager.SelectFont(Fonts.Sinclair);
-            this.Width = width;
-            this.Height = height;
+            this.Width = Matrix_Width;
+            this.Height = Matrix_Height;
             Rotate180 = true;
             Mirror = false;
         }

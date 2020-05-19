@@ -121,7 +121,7 @@ namespace Toolbox.NETMF.Hardware
         /// <param name="SPI_Device">The SPI bus the chain is connected to</param>
         /// <param name="ChipSelect_Port">If there's a CS circuitry, specify it's pin</param>
         /// <param name="ChipSelect_ActiveState">If there's a CS circuitry, specify it's active state</param>
-        public RgbLedStrip(Chipsets Chipset, int LedCount, SPI.SPI_module SPI_Device, Cpu.Pin ChipSelect_Port, bool ChipSelect_ActiveState)
+        public RgbLedStrip(Chipsets Chipset, int LedCount, SPI.SPI_module SPI_Device, Cpu.Pin ChipSelect_Port, bool ChipSelect_ActiveState, byte Default_Brightness = 150, int Default_Bg = 0)
         {
             // default freq  is 1Mhz
             _Freq = 1000; 
@@ -176,9 +176,9 @@ namespace Toolbox.NETMF.Hardware
             ));
 
             // Set brightness only half way, most LED strips are just way too bright imho
-            this.SetBrightnessAll(128);
+            this.SetBrightnessAll(Default_Brightness);
             // Turns off all LEDs
-            this.SetColorAll(0);
+            this.SetColorAll(Default_Bg);
             // Writes for the first time
             this.Write();
         }
